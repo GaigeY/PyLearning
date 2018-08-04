@@ -814,12 +814,386 @@ class Experience():
         2.4.8 对象的赋值
     """
 
-    def Example2_4(self):
+    """
+        2.4.1 面向对象程序设计思想概述
+        面向对象程序设计的一些基本概念：
+            （1）对象（Object）：
+            面向对象程序设计思想可以将一组数据和与这组数据有关操作组装在一起，形成一个实体，这个实体就是对象。
+            （2）类（Class）：
+            具有相同或相似性质的对象的抽象就是类。
+            对象的抽象是类，类的具体化就是对象。
+            （3）封装：
+            将数据和操作捆绑在一起，定义一个新类的过程就是封装。
+            （4）继承：
+            类之间的关系，一个类共享了一个或多个其他类定义的结构和行为。
+            子类可以对基类的行为进行扩展、覆盖、重定义。从同一个类中继承得到的子类具有多态性，即相同的函数名在不同子类中有不同的实现。
+            （5）方法：
+            也称为成员函数，是指对象上的操作，作为类声明的一部分来定义。
+            方法定义了对一个对象可以执行的操作。
+            （6）构造函数：
+            一种成员函数，用来在创建对象时初始化对象。构造函数一般与它所属的类完全同名。
+            （7）析构函数：
+            析构函数与构造函数相反，当对象脱离其作用域时（例如声明对象的函数调用完毕），系统自动执行析构函数。
+            析构函数往往用来做“清理善后”的工作。
+        
+        2.4.2 定义和使用类
+        类是面向对象程序设计思想的基础，可以定义指定类的对象。
+        类中可以定义对象的属性（特性）和方法（行为）。
+        1.声明类
+        在Python中，可以使用class关键字来声明一个类，其基本语法如下：
+            class 类名:
+            成员变量
+            成员函数
+        同样，Python使用缩进标识类的定义代码。
+        类的成员函数必须有一个参数self，而且位于参数列表的开头。
+        self就代表类的实例（对象）自身，可以使用self引用类的属性和成员函数。
         """
-        2.4实例较少，笔记集成到一个Example中。
+    '''
+class Person:
+    def SayHello(self):
+        print 'Hello!'
+print '【2-69~70】定义一个类Person，定义并使用对象。'
+p = Person()
+p.SayHello()
+    '''
+    """
+        2.定义类的对象
+        对象是类的实例。只有定义了具体的对象，才能使用类。创建方法：
+            对象名 = 类名()
+        3.成员变量
+        在类定义中，可以定义成员变量并同时对其赋初始值。
+        """
+    '''
+print '【2-71】定义一个字符串类MyString，定义成员变量string，并同时对其赋初始值。'
+class MyString:
+    str = "MyString"
+    def output(self):
+        print (self.str)
+s = MyString()
+s.output()
+    '''
+    """
+        在类的成员函数中使用self引用成员变量。
+        注意！Python使用下划线作为变量前后缀来指定特殊变量，规则如下：
+            __xxx__表示系统定义名字。
+            __xxx表示类中的私有变量名。
+        类的成员变量可以分为两种情况，一种是公有变量，一种是私有变量。
+            公有变量可以在类的外部访问，它是类与用户之间交流的接口。用户可以通过公有变量向类中传递数据和获取类中的数据。
+            为了保证类的设计思想和内部结构并不完全对外公开，在类的外部都无法访问私有变量。
+        在Python中，除了__xxx格式的成员变量外，其他的成员变量都是公有变量。
+        4.构造函数
+        构造函数是类的一个特殊函数，它拥有一个固定的名称，即__init__（注意，函数名是以'__'开头和结束的）。
+        当创建类的对象实例时系统会自动调用构造函数，通过构造函数对类进行初始化操作。
+        """
+    '''
+print '【2-72】在类MyString中使用构造函数。'
+class MyString:
+    def __init__(self):
+        self.str = "MyString"
+    def output(self):
+        print self.str
+s = MyString()
+s.output()
+    
+print '【2-73】使用带参数的构造函数。'
+class UserInfo:
+    def __init__(self, name, pwd):
+        self.username = name
+        self._pwd = pwd
+    def output(self):
+        print '用户：'+self.username+'\n密码：'+self._pwd
+u = UserInfo("admin", "123456")
+u.output()
+    '''
+    """
+        5.构析函数
+        Python构析函数有一个固定的名称，即__del__()。通常在构析函数中释放类所占用的资源。
+        使用del语句删除一个对象，释放它所占用的资源。
+        """
+    '''
+print '【2-74】构析函数实例'
+class MyString:
+    def __init__(self): #构造函数
+        self.str = "MyString"
+    def __del__(self): #构析函数
+        print 'byebye~'
+    def output(self):
+        print self.str
+s = MyString()
+s.output()
+    '''
+    """
+        2.4.3 类的静态成员
+        静态变量和静态方法是类的静态成员。
+        1.静态变量
+        在类中可以定义静态变量，静态变量只属于定义它们的类。
+        Python不需要显式定义静态变量，任何公有变量都可以作为静态变量使用：
+            类名.变量名
+        """
+    '''
+print '【2-75】定义一个类User，使用静态变量online_count记录当前在线的用户数量。'
+class Users(object):
+    online_count = 0
+    def __init__(self): # 构造函数，创建对象时User.online_count加1
+        Users.online_count += 1
+    def __del__(self): # 构析函数，释放对象时User.online_count减1
+        Users.online_count -= 1
+a = Users() # 创建User对象
+a.online_count += 1
+print Users.online_count # User.online_count不受对象影响
+    '''
+    """
+        2.静态方法
+        与静态变量相同，静态方法只属于它的类，而不属于具体的对象。静态方法具有如下特点：
+            （1）静态方法无需传入self参数，因此在静态方法中无法访问实例变量。
+            （2）在静态方法中不可以直接访问类的静态变量，但可以通过类名引用静态变量。
+        静态方法无法访问实例变量，也不能直接访问类的静态变量，所以静态方法与定义的类没有直接关系，而是起到类似函数工具库的作用。
+        可以使用装饰符@staticmethod定义静态方法：
+            class 类名:
+                @staticmethod
+                def 静态方法名():
+                    方法体
+        对象名或类名都可以调用静态方法，二者没有什么区别。
+        """
+    '''
+print '【2-76】静态方法的实例。'
+class MyClass: # 定义类
+    var1 = 'String 1'
+    @staticmethod #静态方法
+    def staticmd():
+        print '我是静态方法'
+MyClass.staticmd()
+c = MyClass()
+c.staticmd()
+    '''
+    """
+        2.4.4 类方法
+        类方法是Python的一个新概念。类方法有如下特性：
+            （1）可以使用函数名调用，与静态方法一样。
+            （2）无法访问实例变量，但可以访问类的静态变量，与静态方法一样。
+            （3）需传入代表本类的cls参数。
+        可以使用装饰符@classmethod定义类方法：
+            class 类名:
+                @classmethod
+                def 类方法名(cls):
+                    方法体
+        对象名和类名都可以调用类方法，二者没有区别。类方法有一个参数cls，代表定义类方法的类，可以通过cls访问类的静态变量。
+        """
+    '''
+print '【2-77】类方法的实例。'
+class MyClass: # 定义类
+    val1 = 'String 1'
+    def __init__(self):
+        self.val2 = 'Value 2'
+    @classmethod # 类方法
+    def classmd(cls):
+        print '类：' + str(cls) + '，val1：' + cls.val1 + '，无法访问val2的值'
+MyClass.classmd()
+c = MyClass()
+c.classmd()
+    '''
+    """
+    2.4.5 使用isintance()函数判断对象类型。
+    isinstance()函数可以检测一个给定的对象是否属于（继承于）某个类或类型，如果是则返回True，否则返回False：
+        isinstance(对象名，类名或类型名)
+    """
+    '''
+class MyClass: # 定义类
+val1 = 'String 1' # 静态变量
+def __init__(self):
+self.val2 = 'Value 2'
+c = MyClass()
+print isinstance(c,MyClass)
+l = list([1, 2, 3, 4])
+print isinstance(l,list)
+    '''
+    """
+    2.4.6 类的继承和多态
+    继承和多态是面向对象程序设计思想的重要机制。
+    类可以继承其他类的内容，包括成员变量和成员函数。从一个类中继承得到的子类也具有多态性，相同的函数名在不同子类中有不同的实现。
+    1.继承
+    子类拥有父类的所有属性和函数。
+    可以在定义类时指定其父类：
+        class A:
+            def __init__(self, property):   # 构造函数
+                self.propertyA = property   # 类A的成员变量
+            def functionA():                # 类A的成员函数
+    从类A派生一个类B：
+        class B (A):
+            propertyB           # 类B的成员变量
+            def functionB():    # 类B的成员函数
+    从类B中可以访问到类A中的成员变量和成员函数：
+        objB = B()              # 定义一个类B的对象objB
+        print objB.propertyA    # 访问类A的成员变量
+        objB.functionA()        # 访问类A的成员函数
+    类B是类A派生出来的，继承了类A的属性和方法。
+    """
+    '''
+print '【2-79】类继承的实例'
+import time
+class Users:
+    username = ''
+    def __init__(self, uname):
+        self.username = uname
+        print '（构造函数：' + self.username + '）'
+    # 显示用户名
+    def dispUserName(self):
+        print self.username
+
+class UserLogin(Users):
+    def __init__(self, uname, lastLoginTime):
+        Users.__init__(self, uname) # 调用父类User的构造函数
+        self.lastLoginTime = lastLoginTime
+    def dispLoginTime(self):
+        print '登陆时间为：' + self.lastLoginTime
+# 获取当前时间
+now = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+# 声明三个对象
+myUser_1 = UserLogin('admin', now)
+myUser_2 = UserLogin('lee', now)
+myUser_3 = UserLogin('zhang', now)
+# 分别调用父类和子类函数
+myUser_1.dispUserName()
+myUser_1.dispLoginTime()
+myUser_2.dispUserName()
+myUser_2.dispLoginTime()
+myUser_3.dispUserName()
+myUser_3.dispLoginTime()
+    '''
+    """
+    2.抽象类和多态
+    使用面向对象程序设计思想，对类的继承实现应用程序的层次化设计。
+    类的继承关系是树状的，一个根类可以派生出多个子类，子类还可以派生出其他子类。
+    每个子类都可以从父类中继承成员变量和成员函数，实际上相当于继承了一套程序设计框架。
+    
+    Python可以实现抽象类的概念。
+    抽象类是包含抽象方法的类，而抽象方法不包含任何实现的代码，只能在其子类中实现抽象函数的代码。
+        （1）定义抽象类
+        Python通过类库abc实现抽象类，因此在定义抽象类之前需要从类库abc导入ABCMeta类和abstractmethod类：
+            from abc import ABCMeta, abstractmethod
+        ABCMeta是Metaclass for defining Abstract Base Classes的缩写，也就是抽象基类的元类。元类是创建类的类。定义代码：
+            __metaclass__ = ABCMeta
+        例如：
+            class myabc(object):
+                __metaclass__ = ABCMeta
+                ......
+        在抽象类里可以定义抽象方法：
+            @abstractmethod
+        抽象方法不包含任何实现代码，其函数体通常使用pass，例如：
+            class myabc(object):
+                __metaclass__ = ABCMeta
+                @abstractmethod
+                def abcmethod (self):pass
+        （2）实现抽象类
+        可以从抽象类派生子类。方法和普通类的派生和继承一样。
+        （3）多态
+        多态指抽象类中定义的一个方法，可以在其子类中重新实现，不同子类的实现方法也不同。
+    """
+    '''
+print '【2-80】抽象类和多态的实例。创建一个抽象类shape，它定义了一个画图类的基本框架。'
+from abc import ABCMeta, abstractmethod
+class Shape(object):
+    __metaclass__ = ABCMeta
+    def __init__(self):
+        self.color = 'black' # 默认使用黑色
+
+    @abstractmethod
+    def draw(self):pass
+# 创建类Shape的子类circle
+class circle (Shape):
+    def __init__(self, x, y, r): # define C(x,y) and r
+        self.x = x
+        self.y = y
+        self.r = r
+    def draw(self):
+        print 'Draw Circle: (%d, %d, %d)' %(self.x, self.y, self.r)
+# 从类Shape中派生出画直线的类line
+class line (Shape):
+    def __init__(self, x1, y1, x2, y2): #define begin and end
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
+    def draw(self):
+        print 'Draw line: (%d, %d, %d, %d)' %(self.x1, self.y1, self.x2, self.y2)
+# 调用函数
+c = circle(10, 10, 5)
+c.draw()
+
+l = line(10, 10, 20, 20)
+l.draw()
+
+print '【2-86】在【2-80】的基础上定义一个类circle的对象mycircle，对其设置成员变量值，再将其赋值到新的对象newcircle中。'
+mycircle = circle(20, 20, 5)
+# 复制对象
+newcircle = mycircle
+newcircle.draw()
+'''
+
+    def Example2_4_7(self):
+        """
+        2.4.7 对象的序列化
         """
         """
+        序列化（Serialization）是将对象的状态信息转换为可储存或传输形式的过程。
+        序列化时，对象将当前状态写入到临时或永久存储区，通过从存储区读取或反序列化对象可以重新创建该对象。
+        在Python中，序列化过程成为pickle，可以将对象pickle成字符串、文件或者任何类似于文件的对象，也可以将这些字符串、文件或类似于文件的对象unpickle成原来的对象。
+        pickle模块用于实现基本的数据序列和反序列化。
+            import pickle
+        1.将对象序列化成字符串
+        pickle.dumps()方法将对象序列化成字符串。
+        pickle.loads()方法实现反序列化过程。
         """
+
+        import pickle
+        print '【2-82】对列表对象进行序列化。'
+        lista = ['C++', 'C#', 'Java', 'Python']
+        listb = pickle.dumps(lista)
+        print listb
+
+        print '【2-83】将对象序列化成字符串。'
+        listc = pickle.loads(listb)
+        print listc
+
+        """
+        2.将对象序列化到文件
+        pickle.dump()方法可以将对象序列化到文件：
+            pickle.dump(被序列化的对象, 文件对象)
+        在序列化到文件之前，需要打开文件，并得到文件对象。
+        
+        open()函数可以打开指定文件：
+            文件对象 = open(文件名,访问模式,buffering)
+        参数文件名用于指定要打开的文件，通常需要包含路径，可以是绝对路径，也可以说相对路径。
+        参数访问模式用于指定打开文件的模式，执行序列化操作时，通常使用'wb'作为访问模式参数，表示以二进制写模式打开文件。
+        整型参数buffering是可选参数，用于指定访问文件所采用的缓冲方式：
+            buffering = 0，表示不缓冲；
+            buffering = 1，表示只缓冲一行数据；
+            buffering > 1，表示使用给定值作为缓冲区大小。
+            
+        pickle.load()方法可以实现反序列化的功能：
+            被序列化的对象 = pickle.load(文件对象)
+        反序列化之前需要先访问文件，并得到文件对象。具体操作同dump。 
+        """
+
+        print '【2-84】将对象序列化到文件。'
+        output = open('..\\data\\data.pkl','wb')
+        pickle.dump(lista, output)
+        output.close()
+
+        print '【2-85】从文件data.pkl反序列化。'
+        f = open('..\\data\\data.pkl','rb')
+        list = pickle.load(f)
+        print list
+        f.close()
+
+        """
+        2.4.8 对象的赋值 
+        同普通变量，对象也可以通过赋值操作和传递函数参数等方式进行复制。
+        通过赋值操作，实现对象复制：
+            新对象名 = 原有对象名
+        """
+
+
 
 
 if __name__ == "__main__":
@@ -832,4 +1206,5 @@ if __name__ == "__main__":
     # exp.Example2_2_3()
     # exp.Example2_2_4()
     # exp.Example2_2_5()
-    #exp.Example2_3_1()
+    # exp.Example2_3_1()
+    # exp.Example2_4_7()
