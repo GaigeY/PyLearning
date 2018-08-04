@@ -1,18 +1,18 @@
 # -*- coding: UTF-8 -*-
 import const
 
-class Experience():
-    """
-    写在开头：这个Project是我学习Python的笔记，里面有学习笔记和代码实例。
-    """
+"""
+写在开头：这个Project是我学习Python的笔记，里面有学习笔记和代码实例。
+"""
+class Chapter2():
     """
     -**2**- Python语言基础
-    # 知识要点：
-    # 常量          变量
-    # 数据类型      简单数据类型转换
-    # 列表          元组
-    # 运算符        集合
-    # Python对象
+    知识要点：
+        常量          变量
+        数据类型      简单数据类型转换
+        列表          元组
+        运算符        集合
+        Python对象
     """
 
     """
@@ -1193,18 +1193,248 @@ newcircle.draw()
             新对象名 = 原有对象名
         """
 
+class Chapter3():
+    """
+    -** 3 **- 常用Python语句
+    知识要点：
+        赋值语句        分支语句
+        循环语句        异常处理语句
+    """
+    """
+    3.1 赋值语句
+    赋值语句是Python语言中最简单、最常用的语句。赋值语句定义变量并为其赋初值。
+    """
+    def Example3_1(self):
 
+        print '【3-1】赋值语句例子'
+        a = 10
+        a += 1
+        print a
+        a *= 10
+        print a
+        a **= 2
+        print a
+
+        """
+        3.1.1 通过赋值语句实现序列解包
+        Python序列包括字符串、列表、元组。
+        序列解包是将序列中储存的值指派给各个变量：
+            x, y, z = 序列
+        被解包的序列里的元素数量必须与'='左侧的变量数量相同。
+        """
+
+        print '【3-2】赋值实现序列解包。'
+        x, y, z = (1, 2, 3)
+        print x
+        print y
+        print z
+
+        """
+        3.1.2 链式赋值
+        链式赋值可以一次性将一个值指派给多个变量：
+            变量1 = 变量2 = 变量3 = 值
+        变量1、变量2和变量3同时被赋值。
+        """
+
+        print '【3-3】链式赋值。'
+        x = y = z = 3
+        print x
+        print y
+        print z
+
+    """
+    3.2 控制语句
+    Python中有专门的控制语句来控制代码段的执行方式。
+    不同功能的控制语句称为控制流。
+    """
+
+    def Example3_2_1(self):
+        """
+        3.2.1 条件分支语句
+        """
+        """
+        条件分支语句指，当指定表达式取不同值时，程序运行的流程也发生相应的分支变化。
+        Python提供的条件分支语句包括if语句、else语句和elif语句。
+        1.if语句
+        if语句是最常用的一种条件分支语句：
+            if 条件表达式:
+                语句块
+        如果语句块中包含多条语句，这些语句必须拥有相同的缩进。
+        """
+
+        print '【3-4~5】if语句和嵌套if语句的例子。'
+        a = 150
+        if a > 10:
+            print '变量a大于10'
+            if a > 100:
+                print '变量\$a大于100'
+
+        """
+        2.else语句
+        将else语句与if语句结合使用，指定不满足条件时执行的语句：
+            if 条件表达式:
+                语句块1
+            else:
+                语句块2
+        """
+
+        print '【3-6】if...else...语句的例子。'
+        if a > 10:
+            print '变量a大于10'
+        else:
+            print '变量a小雨或等于10'
+
+        """
+        3.elif语句
+        elif语句是else语句和if语句的组合，等同于C中的else if：
+            if 条件表达式1:
+                语句块1
+            elif 条件表达式2:
+                语句块2
+            elif 条件表达式3:
+                语句块3
+            ......
+            else:
+                语句块n
+        
+        """
+
+        print '【3-7】显示当前系统日期的Python代码，用到了if、elif和else语句。'
+        import datetime
+        str = '今天是'
+
+        d = datetime.datetime.now()
+        print d.weekday()
+        if d.weekday() == 0:
+            str += '星期一'
+        elif d.weekday() == 1:
+            str += '星期二'
+        elif d.weekday() == 2:
+            str += '星期三'
+        elif d.weekday() == 3:
+            str += '星期四'
+        elif d.weekday() == 4:
+            str += '星期五'
+        elif d.weekday() == 5:
+            str += '星期六'
+        else:
+            str += '星期日'
+        print str
+
+    def Example3_2_2(self):
+        """
+        3.2.2 循环语句
+        """
+        """
+        Python的循环语句包括while语句和for语句。
+        1.while语句
+        while语句的基本语法结构：
+            while 条件表达式:
+                循环语句体
+        """
+
+        print '【3-8】while语句实例。'
+        i = 1
+        sum = 0
+        while i < 11:
+            sum += i
+            i += 1
+        print sum
+
+        """
+        2.for语句
+        for语句基本语法结构：
+            for i in range(begin, end):
+                循环体
+        循环计数器i从start开始，到end结束，退出循环。
+        for语句还可以用于遍历元组、列表、字典和集合等序列对象。
+        """
+
+        print '【2-9】for语句实例。'
+        i = 1
+        sum = 0
+        for i in range(1,11):
+            print i
+            sum += i
+
+        print sum
+
+        """
+        3.continue语句
+        循环体中，continue语句跳过本次循环后面的代码，重新开始下一次循环。
+        """
+
+        print '【3-10】只计算1~100之间偶数和。'
+        i = 1
+        sum = 0
+        for i in range(1,101):
+            if i % 2 ==1:
+                continue
+            sum += i
+
+        print sum
+
+        """
+        4.break语句
+        循环体中，break语句跳出循环体。
+        """
+
+        print '【3-11】将[3-8]修改为使用break语句跳出循环体。'
+        i = 1
+        sum = 0
+        while True:
+            if i == 11:
+                break
+            sum += i
+            i += 1
+        print sum
+
+    """
+    3.3 异常处理语句
+    """
+    def Example3_3(self):
+        """
+        程序在运行过程中可能会出现异常情况。
+        """
+        """
+        
+        异常处理语句用于捕捉异常情况并进行处理，避免程序异常退出。
+        Python的异常处理语句是try-exception：
+            try:
+                <try语句块>
+            except [<异常处理类>, <异常处理类>, ... .] as <异常处理对象>:
+                <异常处理代码>
+            finally:
+                <最后执行代码>
+        通常在finally块中释放资源。
+        """
+
+        print '【3-12~13】发生除零错误时不进行和进行异常处理的情况'
+        # i = 10
+        # print 30 / (i - 10)
+        try:
+            i = 10
+            print 30 / (i - 10)
+        except Exception as e:
+            print e
+        finally:
+            print "执行完成"
 
 
 if __name__ == "__main__":
-    exp = Experience()
-    # exp.Example2_1_1()
-    # exp.Example2_1_2()
-    # exp.Example2_1_3()
-    # exp.Example2_2_1()
-    # exp.Example2_2_2()
-    # exp.Example2_2_3()
-    # exp.Example2_2_4()
-    # exp.Example2_2_5()
-    # exp.Example2_3_1()
-    # exp.Example2_4_7()
+    # c2 = Chapter2()
+    c3 = Chapter3()
+    # c2.Example2_1_1()
+    # c2.Example2_1_2()
+    # c2.Example2_1_3()
+    # c2.Example2_2_1()
+    # c2.Example2_2_2()
+    # c2.Example2_2_3()
+    # c2.Example2_2_4()
+    # c2.Example2_2_5()
+    # c2.Example2_3_1()
+    # c2.Example2_4_7()
+    # c3.Example3_1()
+    # c3.Example3_2_1()
+    # c3.Example3_2_2()
+    c3.Example3_3()
