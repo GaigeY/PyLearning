@@ -1420,10 +1420,213 @@ class Chapter3():
         finally:
             print "执行完成"
 
+class Chapter4():
+    """
+    -** 4 **- Python函数
+    知识要点：
+        声明函数            方法调用
+        在函数中传递参数    函数的返回值
+        变量的作用域        全局变量和局部变量
+        Python内置函数      函数式编程
+        调用函数
+    """
+    """
+    4.1 声明和调用函数
+    函数包含两个部分：声明这个部分是函数，定义这个函数包含的功能。
+    """
+
+    """
+    4.1.1 声明函数
+    使用关键字def创建Python自定义函数：
+        def 函数名(参数列表):
+            函数体
+    参数列表可以为空，参数之间用逗号（,）分隔。函数体可以是一条语句，也可以多条语句。
+    Python函数体唯一的分隔符是一个冒号（:），接着代码本身是缩进的。函数体比def关键字多一个缩进。
+    """
+    '''
+def PrintWelcome():
+    print '【4-1】创建一个简单的函数PrintWelcome，它的功能是打印字符串"欢迎使用Python"。'
+    print '欢迎使用Python'
+
+def PrintString(str):
+    print '【4-2】定义函数PrintString，通过打印内容'
+    print str
+
+def sum(num1, num2):
+    print '【4-3】定义一个函数sum()，计算并打印两个参数之和。'
+    print num1 + num2
+    '''
+
+    """
+    4.1.2 调用函数
+    直接使用函数名调用函数，系统函数和自定义函数调用方法是一致的。
+    如果函数存在参数，调用函数时也需要使用参数。
+    """
+    '''
+print '【4-4】调用len()函数，返回字符串student长度。'
+print len("student")
+
+print '【4-5】调用[4-3]声明的函数sum()，计算100+200之和。'
+sum(100, 200)
+    '''
+
+    """
+    4.2 参数和返回值
+    参数和返回值与函数交换数据。
+    """
+
+    """
+    4.2.1 列表和字典参数
+    1.普通参数
+    Python按值传递参数。
+    值传递指调用函数时将常量或变量的值（称为实参）传递给函数的参数（称为形参）。实参和形参互不相干。
+    """
+    '''
+print '【4-6】函数中按值传递实例。'
+def func1(num):
+    num += 1
+a = 10
+func1(a)
+print a
+
+print '【4-7】分别打印实参和形参的地址。'
+def func2(num):
+    print 'address of num: ', id(num)
+a = 10
+func2(a)
+print 'address of a: ', id(a)
+    '''
+
+    """
+    2.列表和字符参数
+    除了普通变量以外，列表、字典变量能向函数内部批量传送数据。
+    列表或字典作为函数参数时，函数内部操作会影响实参。
+    """
+    '''
+print '【4-8】列表作为函数参数的实例。'
+def sum(list):
+    total = 0
+    for x in range(len(list)):
+        print str(list[x]) + '+'
+        total += list[x]
+    print '=' + str(total)
+list = [10, 20, 30, 40]
+sum(list)
+
+print '【4-9】字典作为函数参数的实例。'
+def print_dict(dict):
+    for (k, v) in dict.items():
+        print 'dict[%s] =' % k, v
+dict = {'a': 'apple', 'b': 'banana', 'g': 'grape', 'o': 'orange'}
+print_dict(dict)
+
+print '【4-10】函数中修改列表参数的实例。'
+def swap(list):
+    temp = list[0]
+    list[0] = list[1]
+    list[1] = temp
+list = [10,20]
+print list
+swap(list)
+print list
+
+print '【4-11】函数中修改字典参数的实例。'
+def changeA(dict):
+    dict['a'] = 1
+
+d = {'a': 10, 'b': 20, 'c': 30}
+changeA(d)
+print d
+'''
+
+    """
+    3.参数的默认值
+    Python中可为参数设置默认值。
+    定义函数时直接在参数后面使用'='为其设置默认值。
+    调用函数而不指定该参数值时，函数体中以默认值为该参数。
+    
+    注意！有默认值的参数只能出现在没有默认值的参数后面。
+    错误范例：
+        def func1(a = 1, b, c = 10):
+            函数体
+    
+    4.可变长参数
+    Python支持可变长度的参数列表。
+    可变长参数可以是元组或列表，参数以*开头表示一个元组：
+        def func(*t):
+    任意多个实参调用func()函数，如：
+        func(1,2,3,4)
+    也可以不指定可变长参数，此时可变长参数是一个没有元素的元组或字典。
+    
+    参数以**开头表示一个字典：
+        def func(**t):
+    任意多个实参调用func()函数：
+        key = value
+    """
+    '''
+print '【4-12】设置参数默认值的实例。'
+def say(message, times = 1):
+    print message * times
+say('hello')
+say('Python', 3)
+
+print '【4-14】以元组为可变长参数的实例。'
+def func1(*t):
+    print '可变长参数数量如下：'
+    print len(t)
+    print '依次为：'
+    for x in range(len(t)):
+        print t[x]
+
+func1(1,2,3,4)
+
+print '【4-15】用可变长参数计算任意一组指定数字之和。'
+def sum(*t):
+    sum = 0
+    for x in range(len(t)):
+        print str(t[x]) + '+'
+        sum += t[x]
+    if len(t) > 0:
+        print '=' + str(sum)
+sum(1, 2)
+sum(1, 2, 3, 4)
+sum(11, 22, 33, 44, 55)
+print '【4-16】调用函数时不指定可变长参数。'
+sum()
+
+print '【4-17】以字典为可变长参数的实例。'
+def summy(**t):
+    print t
+summy(a = 1, b = 2, c = 3)
+    '''
+    """
+    4.2.2 函数的返回值
+    return语句返回函数值并退出函数。
+    """
+    '''
+print '【4-18】对[4-13]中sum()函数改造，函数返回相加结果。'
+def sum(num1, num2):
+    return num1 + num2
+print sum(1, 3)
+
+print '【4-19】返回指定列表中的偶数。'
+def filter_even(list):
+    list1 = []
+    for i in range(len(list)):
+        if list[i] % 2 == 0:
+            list1.append(list[i])
+            i -= 1
+    return list1
+list = [1,2,3,4,5,6,7,8,9,10]
+list2 = filter_even(list)
+print list2
+    '''
+
 
 if __name__ == "__main__":
     # c2 = Chapter2()
-    c3 = Chapter3()
+    # c3 = Chapter3()
+    c4 = Chapter4()
     # c2.Example2_1_1()
     # c2.Example2_1_2()
     # c2.Example2_1_3()
@@ -1437,4 +1640,4 @@ if __name__ == "__main__":
     # c3.Example3_1()
     # c3.Example3_2_1()
     # c3.Example3_2_2()
-    c3.Example3_3()
+    # c3.Example3_3()
