@@ -1642,7 +1642,6 @@ def setNumber():
 setNumber()
 print a
 '''
-
     """
     4.3.2 在IDLE的调试窗口中查看变量的值
     在程序中使用print()函数输出变量的值，是了解程序运行情况的常用方法。
@@ -1672,6 +1671,130 @@ print a
     内置函数就是Python中被自动加载的函数，任何时候都可以用。
     """
 
+    """
+    4.4.1 数学运算函数
+    如下表所示：
+        abs()           abs(x)                             返回x的绝对值
+        pow()           pow(x,y)                           返回x的y次幂
+        round()         round(x[,n])                       返回浮点数x的四舍五入值，保留n位小数
+        divmod()        divmod(a,b)                        返回a除以b的商和余数，在一个元组中：(a/b,a%b)
+    """
+    '''
+print '【4-21】数学运算函数的实例。'
+print abs(-1)
+print round(80.23456,2)
+print pow(2,3)
+print divmod(8,3)
+    '''
+    """
+    4.4.2 字符串处理函数
+    字符串处理函数是一个程序设计语言的基本功能。
+    1.字符串中字符大小写的变换
+    如下表所示：
+        lower()         str.lower()                         将字符串str中的字母转换为小写字母
+        upper()         str.upper()                         将字符串str中的字母转换为大写字母
+        swapcase()      str.swapcase()                      将字符串str中的字母大小写互换
+        capitalize()    str.capitalize()                    将字符串str中的首字母大写
+        title()         str.title()                         将字符串str中所有单词的首字母大写，其余为小写
+    2.指定输出字符串时的对齐方式
+    如下表所示：
+        ljust()         str.ljust(width,[fillchar])         左对齐字符串str，总宽度为width，不足部分以fillchar指定的字符填充，默认为空格
+        rjust()         str.rjust(width,[fillchar])         右对齐字符串str，总宽度为width，不足部分以fillchar指定的字符填充，默认为空格
+        center()        str.center(width,[fillchar])        居中对齐字符串str，总宽度为width，不足部分以fillchar指定的字符填充，默认为空格
+        zfill()         str.zfill(width)                    将字符串str变成width长，右对齐，不足部分以0补足
+    3.搜索和替换
+    如下表所示：
+        find()          str.find(substr[,start[,end]])      返回字符串str中substr首次出现的位置，没有则返回-1
+        index()         str.index(substr[,start[,end]])     返回字符串str中substr首次出现的位置，没有则返回运行错误
+        rfind()         str.rfind(substr[,start[,end]])     返回字符串str中substr最后出现的位置，没有则返回-1
+        rindex()        str.rindex(substr[,start[,end]])    返回字符串str中substr最后出现的位置，没有则返回运行错误
+        count()         str.count(substr[,start[,end]])     返回字符串str中substr出现的次数
+        replace()       str.replace(oldstr,newstr[,count])  把oldstr换成newstr，替换次数上限为count
+        strip()         str.strip([chars])                  删除字符串str首尾指定字符，默认为空白符（'\n','\r','\t',''...）
+        lstrip()        str.lstrip([chars])                 删除字符串str开头指定字符，默认为空白符（'\n','\r','\t',''...）
+        rstrip()        str.rstrip([chars])                 删除字符串str末尾指定字符，默认为空白符（'\n','\r','\t',''...）
+        expandtabs()    str.expandtabs(tabsize)             把字符串str每个tab换成tabsize个空格，默认8个
+    4.分隔和组合
+    如下表所示：
+        split()         str.split([sep[,maxsplit]])         依据seq把str分割成列表，maxsplit是分割次数
+        splitlines()    str.splitlines([keepends])          把str按行分割成一个列表，keepends为True则每行保留行分隔符
+        join()          str.join(seq)                       将seq以字符串str连接成一个新的字符串
+    5.字符串判断相关
+        startswith()   str.startswitch(substr)             判断str是否以substr开头
+        endswith()    str.endswitch(substr)               判断str是否以substr结尾
+        isalnum()       str.isalnum()                       判断str是否全为字母或数字
+        isalpha()       str.isalpha()                       判断str是否全为字母
+        isdigit()       str.isdigit()                       判断str是否全为数字
+        islower()       str.islower()                       判断str是否全为小写字母
+        isupper()       str.isupper()                       判断str是否全为大写字母
+    """
+    '''
+print '【4-22】字符大小写变换函数的实例。'
+str1 = 'hello world'
+str2 = 'HELLO WORLD'
+str3 = 'Hello world'
+print str1.upper()
+print str2.lower()
+print str3.swapcase()
+print str3.swapcase()
+print str1.capitalize()
+print str2.title()
+
+print '【4-23】指定输出字符串对齐方式函数的实例。'
+str1 = 'hello world'
+print str1.ljust(30, "*")
+print str1.rjust(30, "*")
+print str1.center(30, "*")
+print str1.zfill(30)
+
+print '【4-24】搜索和替换字符串函数的实例。'
+str1 = 'Hello world'
+print str1.find('l')
+print str1.index('o')
+print str1.rfind('l')
+print str1.rindex('o')
+str2 = '    Hello'
+print str2.replace(' ','*')
+print str2.strip()
+
+print '【4-25】分隔和组合字符串函数的实例。'
+str1 = 'hello world Python'
+list1 = str1.split()
+print list1
+str1 = 'hello world\nPython'
+list1 = str1.splitlines()
+print list1
+list1 = ['hello', 'world', 'Python']
+str1 = '#'
+print str1.join(list1)
+
+print '【4-26】与字符串判断相关函数的实例'
+# coding = gb2312
+str = 'python String function'
+print str + ".startwith('t') 的结果"
+print str.startswith('t')
+print str + ".endwith('t') 的结果"
+print str.endswith('t')
+print str + ".isalnum() 的结果"
+print str.isalnum()
+str = 'pythonStringfunction'
+print str + ".isalnum() 的结果"
+print str.isalnum()
+print str + ".isalpha() 的结果"
+print str.isalpha()
+print str + ".isupper() 的结果"
+print str.isupper()
+print str + ".islower() 的结果"
+print str.islower()
+print str + ".isdigit() 的结果"
+print str.isdigit()
+str = '3423'
+print str + ".isdigit() 的结果"
+print str.isdigit()
+    '''
+    """
+    4.5 函数式编程
+    """
 
 if __name__ == "__main__":
     # c2 = Chapter2()
