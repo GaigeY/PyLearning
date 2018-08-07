@@ -15,7 +15,7 @@
     <session id="-645011777">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="9" />
+          <entry key="project.closed" value="10" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="1" />
@@ -23,9 +23,9 @@
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.61" value="1" />
           <entry key="project.open.time.7" value="2" />
-          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.8" value="4" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="12" />
+          <entry key="project.opened" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -40,12 +40,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="29252" />
+          <entry key="py" value="34403" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="29252" />
+          <entry key="Python" value="34403" />
         </counts>
       </usages-collector>
     </session>
@@ -55,11 +55,47 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/NoteBook.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="1795" column="13" selection-start-line="1795" selection-start-column="13" selection-end-line="1795" selection-end-column="13" />
+            <state relative-caret-position="155">
+              <caret line="2065" column="11" lean-forward="true" selection-start-line="2065" selection-start-column="11" selection-end-line="2065" selection-end-column="11" />
               <folding>
                 <element signature="e#110#30748#0" />
                 <element signature="e#30772#35248#0" />
+                <element signature="e#35521#35715#1" />
+                <element signature="e#35720#36000#1" />
+                <element signature="e#36006#36095#1" />
+                <element signature="e#36100#36230#1" />
+                <element signature="e#36287#36398#1" />
+                <element signature="e#36403#36619#1" />
+                <element signature="e#36625#36714#1" />
+                <element signature="e#36719#37400#1" />
+                <element signature="e#37406#37880#1" />
+                <element signature="e#37885#38526#1" />
+                <element signature="e#38531#38583#1" />
+                <element signature="e#38588#38964#1" />
+                <element signature="e#39050#39161#1" />
+                <element signature="e#39166#39301#1" />
+                <element signature="e#39306#39971#1" />
+                <element signature="e#40072#40412#1" />
+                <element signature="e#40417#40524#1" />
+                <element signature="e#40529#43238#1" />
+                <element signature="e#43243#44637#1" />
+                <element signature="e#44688#45098#1" />
+                <element signature="e#46229#46981#1" />
+                <element signature="e#46986#46997#1" />
+                <element signature="e#47197#47464#1" />
+                <element signature="e#47473#47484#1" />
+                <element signature="e#47692#47864#1" />
+                <element signature="e#47869#47880#1" />
+                <element signature="e#48114#48125#1" />
+                <element signature="e#48260#48271#1" />
+                <element signature="e#48362#48775#1" />
+                <element signature="e#48780#48802#1" />
+                <element signature="e#48967#49236#1" />
+                <element signature="e#49287#49303#1" />
+                <element signature="e#49382#49528#1" />
+                <element signature="e#49533#49544#1" />
+                <element signature="e#49590#49601#1" />
+                <marker date="1533635625413" expanded="true" signature="50795:50977" ph="..." />
               </folding>
             </state>
           </provider>
@@ -98,7 +134,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="837" />
     <option name="y" value="-30" />
     <option name="width" value="1299" />
@@ -110,6 +146,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -131,7 +168,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -199,7 +235,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2494043" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -234,11 +270,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/NoteBook.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="1795" column="13" selection-start-line="1795" selection-start-column="13" selection-end-line="1795" selection-end-column="13" />
+        <state relative-caret-position="155">
+          <caret line="2065" column="11" lean-forward="true" selection-start-line="2065" selection-start-column="11" selection-end-line="2065" selection-end-column="11" />
           <folding>
             <element signature="e#110#30748#0" />
             <element signature="e#30772#35248#0" />
+            <element signature="e#35521#35715#1" />
+            <element signature="e#35720#36000#1" />
+            <element signature="e#36006#36095#1" />
+            <element signature="e#36100#36230#1" />
+            <element signature="e#36287#36398#1" />
+            <element signature="e#36403#36619#1" />
+            <element signature="e#36625#36714#1" />
+            <element signature="e#36719#37400#1" />
+            <element signature="e#37406#37880#1" />
+            <element signature="e#37885#38526#1" />
+            <element signature="e#38531#38583#1" />
+            <element signature="e#38588#38964#1" />
+            <element signature="e#39050#39161#1" />
+            <element signature="e#39166#39301#1" />
+            <element signature="e#39306#39971#1" />
+            <element signature="e#40072#40412#1" />
+            <element signature="e#40417#40524#1" />
+            <element signature="e#40529#43238#1" />
+            <element signature="e#43243#44637#1" />
+            <element signature="e#44688#45098#1" />
+            <element signature="e#46229#46981#1" />
+            <element signature="e#46986#46997#1" />
+            <element signature="e#47197#47464#1" />
+            <element signature="e#47473#47484#1" />
+            <element signature="e#47692#47864#1" />
+            <element signature="e#47869#47880#1" />
+            <element signature="e#48114#48125#1" />
+            <element signature="e#48260#48271#1" />
+            <element signature="e#48362#48775#1" />
+            <element signature="e#48780#48802#1" />
+            <element signature="e#48967#49236#1" />
+            <element signature="e#49287#49303#1" />
+            <element signature="e#49382#49528#1" />
+            <element signature="e#49533#49544#1" />
+            <element signature="e#49590#49601#1" />
+            <marker date="1533635625413" expanded="true" signature="50795:50977" ph="..." />
           </folding>
         </state>
       </provider>

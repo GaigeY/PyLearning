@@ -1599,6 +1599,7 @@ def summy(**t):
     print t
 summy(a = 1, b = 2, c = 3)
     '''
+
     """
     4.2.2 函数的返回值
     return语句返回函数值并退出函数。
@@ -1792,9 +1793,284 @@ str = '3423'
 print str + ".isdigit() 的结果"
 print str.isdigit()
     '''
+
     """
     4.5 函数式编程
+    函数式编程是一种典范。
     """
+
+    """
+    4.5.1 函数式编程概述
+    函数式编程是面向对象之前最流行的编程思想。
+    1.什么是函数式编程
+    函数式编程是一种编程的基本风格，也就是构建程序的结构和元素的方式。
+    函数式编程将计算过程看作数学函数，也就是可以使用表达式编程。相同的参数调用函数会得到相同的结果。
+    下面介绍几个与函数式编程有关的概念：
+        （1）头等函数（First-class Function）
+        一个编程语言把函数视为头等函数，则称其拥有头等函数。
+        拥有头等函数的编程语言可以将函数作为其他函数的参数，也可以将函数作为其他函数的返回值。
+        拥有头等函数的编程语言可以把函数赋值给变量或储存在元组、列表、字典、集合和对象等数据结构中。
+        有的语言还支持匿名函数。
+        拥有头等函数的编程语言中，函数名没有任何特殊的状态，将函数看作function类型的二进制类型。
+        （2）高阶函数（Higher-order Function）
+        高阶函数是头等函数的一种实践，将其他函数作为参数或返回结果。
+        （3）纯函数
+        纯函数具有特性：
+            纯函数与外界交换数据只有唯一通道——参数和返回值。
+            纯函数不操作全局变量，没有状态、无I/O操作，不改变传入的任何参数值。理想情况下不会传入任何外部数据。
+            纯函数很容易移植到新运行环境，最多只需修改类型定义。
+            纯函数具有引用透明性（Referential Transparency）。同一输入值一定得到相同输出值。
+        （4）递归
+        函数式编程语言中，循环通常通过递归实现。
+        递归就是函数里调用自身；使用递归策略时，必须有一个明确的递归结束条件，称为递归出口。
+    2.函数式编程的优点
+        （1）便于单元测试
+        单元测试指对软件中最小可测试单元进行检测验证。
+        函数是最小可测试单元的一种。
+        （2）便于调试
+        函数式编程语言的bug易于重现。
+        （3）适合并行执行
+        并行通常指程序不同部分同时运行而互不干扰。
+        程序并行执行的最大问题是或成死锁，死锁指两个或两个以上的进程（线程）因资源争夺造成互相等待的现象。
+    
+    4.5.2 Python函数式编程常用的函数
+    1.lambda表达式
+    Lambda表达式是一种匿名函数，从数学的λ演算得名。
+    λ演算用来定义可计算函数。
+        （1）Python匿名函数
+        Python的Lambda表达式函数体只能有唯一语句，也就是返回值表达式语句：
+            返回函数名 = lambda参数列表 : 函数返回值表达式语句
+        （2）Lambda表达式数组
+        Lambda表达式作为数组（或列表、字典）元素，定义方法为：
+            数组名 = [(Lambda表达式1), (Lambda表达式2), ...]
+        调用数组中Lambda表达式的方法：
+            数组名[索引]( Lambda表达式的参数列表)
+        （3）Lambda表达式作为函数的返回值
+        在普通函数中返回Lambda表达式。
+    """
+    '''
+print '【4-27】使用Lambda表达式的例子。'
+sum = lambda x,y,z : x+y+z
+print sum(1,2,3)
+# 等价于def sum(x,y,z)
+
+print '【4-28】定义一个Lambda表达式数组，分别是平方、立法和四次方。'
+Arr = [(lambda x : x ** 2), (lambda x : x ** 3), (lambda x : x ** 4)]
+print Arr[0](2),Arr[1](2),Arr[2](2)
+
+print '【4-29】定义一个函数math，可以返回加法、减法、乘法和除法的Lambda表达式。'
+def math(o):
+    if o == 1:
+        return lambda x,y : x+y
+    if o == 2:
+        return lambda x,y : x-y
+    if o == 3:
+        return lambda x,y : x*y
+    if o == 4:
+        return lambda x,y : x/y
+
+action = math(1) # 返回加法Lambda表达式
+print '10+2',action(10,2)
+action = math(2) # 返回减法Lambda表达式
+print '10-2=',action(10,2)
+action = math(3) # 返回乘法Lambda表达式
+print '10*2,=',action(10,2)
+action = math(4) # 返回除法Lambda表达式
+print '10/2.=',action(10,2)
+    '''
+    """
+    2.使用map()函数
+    map()函数将指定序列中的所有函数作为参数调用指定函数，并将结果构成一个新的序列返回：
+        结果序列 = map(映射函数, 序列1[, 序列2, ...])
+    map()函数的参数中，序列数取决于银蛇函数的参数数量。
+    序列1、序列2等元素会按顺序作为映射函数的参数，映射函数的返回值将作为map()函数返回序列的元素。
+    """
+    '''
+print '【4-30】使用map()函数依次计算2、4、6、8、10的平方。'
+arr = map(lambda x : x ** 2, [2, 4, 6, 8, 10])
+for e in enumerate(arr):
+    print e
+
+print '【4-31】在map()函数中对两个序列进行处理。'
+arr = map(lambda x,y: x+y, [1, 3, 5, 7, 9], [2, 4, 6, 8, 10])
+for e in enumerate(arr):
+    print e
+    '''
+    """
+    3.filter()函数
+    filter()函数对指定序列执行过滤操作：
+        filter(function, sequence)
+    function接受一个函数，返回布尔值True或False。sequence可以是列表、元组或字符串。
+    filter()函数以序列参数sequence中每个元素为参数调用function，调用结果为True的元素最后作为返回值。
+    """
+    '''
+print '【4-32】filter()函数的实例。'
+def is_even(x):
+    return x % 2 == 0
+
+arr =  filter(is_even, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+for e in enumerate(arr):
+    print e
+    '''
+    """
+    4.reduce()函数
+    reduce()函数将指定序列中所有元素作为参数按一定的规则调用指定函数：
+        计算结果 = reduce(映射函数, 序列)
+    映射函数必须有2个参数。以序列前两个元素调用映射函数，将返回结果和第三个元素调用函数，以此类推，直至最后一个元素。
+    从Python3.0开始，reduce()函数不再被集成在Python内置函数中，需引用functools模块，才能调用reduce()函数。
+    """
+    '''
+print '【4-33】使用ruduce()函数计算1-10的整数和。'
+# def add(x,y): return x+y
+add = lambda x,y : x+y
+sum = reduce(add, range(1, 11))
+print sum
+    '''
+    """
+    5.zip()函数
+    zip()函数以一系列列表作为参数，将列表对应的函数打包成一个个元组，返回这些元组组成的列表。
+    打包结果前面加上*，实现解压。
+    """
+    '''
+print '【4-34】zip()函数的实例。'
+a = [1, 2, 3]
+b = [4, 5, 6]
+z = [7, 8, 9]
+zipped = zip(a, b, z)
+for element in zipped:
+    print element
+
+print '【4-35】zip()函数传入参数不等的实例。'
+a = [1, 2, 3]
+b = [4, 5, 6, 7, 8, 9]
+zipped = zip(a, b)
+for element in zipped:
+    print element
+
+print '【4-35】zip()函数将打包结果解压。'
+a = [1, 2, 3]
+b = [4, 5, 6]
+zipped = zip(a, b)
+unzipped = zip(*zipped)
+for element in unzipped:
+    print element
+    '''
+    """
+    4.5.3 普通编程方式与函数式编程的对比
+    相比较而言，函数式编程具有如下特点：
+        （1）代码更简单。
+        （2）数据、操作、返回值都放一起。
+        （3）没有循环体，几乎没有临时变量，无序分析程序的流程行尾数据变化过程。
+        （4）代码定义需要做什么，而不是怎么做。
+    """
+    '''
+print '【4-37~38】分别以普通编程方式和函数式编程方式计算列表中正数和。'
+list = [2, -4, 9, -5, 6, 13, -12, -3, 8, -11, 16]
+sum = 0
+for i in range(len(list)):
+    if list[i] > 0:
+        sum += list[i]
+print sum
+
+sum = filter(lambda x : x > 0, list)
+s = reduce(lambda x,y : x+y, sum)
+print s
+    '''
+
+    """
+    4.6 闭包和递归函数
+    """
+
+    """
+    4.6.1 闭包
+    Python中，闭包（Closure）指函数的嵌套。
+    在函数内部定义一个嵌套函数，将嵌套函数视为一个对象，作为它的函数的返回结果。
+    """
+    '''
+# coding = utf-8
+def func_lib():
+    def add(x,y):
+        return x+y
+    return add      # 返回函数对象
+
+fadd = func_lib()
+print fadd(1, 2)
+    '''
+    """
+    4.6.2 递归函数
+    递归函数指直接或间接调用自身的函数。
+    """
+    '''
+print '【4-40】递归函数计算阶乘。'
+def fact(n):
+    if n == 1:
+        return 1
+    return n * fact(n-1)
+
+print fact(5)
+    '''
+
+    """
+    4.7 迭代器和生成器
+    """
+
+    """
+    4.7.1 迭代器
+    迭代器是访问集合内元素的一种方式。
+    迭代对象从序列（列表、元组、字典、集合）的第一个元素开始遍历。迭代器不能回退，只能往前行进迭代。
+    1.iter()函数
+    内建的工厂函数iter(iterable)获取序列的迭代器对象：
+        迭代器对象 = iter(序列对象)
+    next()函数获取迭代器的下一个函数：
+        next(迭代器对象)
+    2.enumerate()函数
+    enumerate()函数将列表或元组生成一个有序号的序列。
+    """
+    '''
+print '【4-41】iter()函数的实例。'
+list = ['C++', 'C#', 'Java', 'Python']
+it = iter(list)
+print next(it)
+print next(it)
+print next(it)
+print next(it)
+
+print '【4-42】enumerate()函数的实例。'
+# coding = utf-8
+list = ['C++', 'C#', 'Java', 'Python']
+for index,value in enumerate(list):
+    print "第%d个元素是%s" % (index,value)
+    '''
+    """
+    4.7.2 生成器
+    生成器（Generator）是一个特殊的函数，它具有如下特点：
+        （1）生成器函数都包含一个yield语句，执行到yield语句时函数返回。
+        （2）生成器函数可以记住上一次返回时在函数体中的位置，对生成器函数的下一次调用跳转至该函数中间，而上次调用的所有局部变量保持不变。
+    生成器的返回值有一个__next__()方法，恢复生成器执行，并直到下一个yield表达式处。
+    """
+    '''
+print '【4-43】生成器的实例。'
+def addlist(alist):
+    for i in alist:
+        yield i + 1
+alist = [1, 2, 3, 4]
+for x in addlist(alist):
+    print x
+'''
+print '【4-44】__next__()方法实现[4-43]的功能。'
+def addlist(alist):
+    for i in alist:
+        yield i + 1
+alist = [1, 2, 3, 4]
+x = addlist(alist)
+x = x.__next__()
+print x
+x = x.__next__()
+print x
+x = x.__next__()
+print x
+x = x.__next__()
+print x
 
 if __name__ == "__main__":
     # c2 = Chapter2()
