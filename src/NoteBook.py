@@ -1632,7 +1632,6 @@ print list2
     4.3.1 变量的作用域
     局部变量旨在定义它的函数内部有效；全局变量在定义后的代码中都有效，包括它后面定义的函数体内。
     局部变量和全局变量同名，则只有局部变量有效。
-    
     """
     '''
 print '【4-20】局部变量和全局变量作用域的实例。'
@@ -1721,8 +1720,8 @@ print divmod(8,3)
         splitlines()    str.splitlines([keepends])          把str按行分割成一个列表，keepends为True则每行保留行分隔符
         join()          str.join(seq)                       将seq以字符串str连接成一个新的字符串
     5.字符串判断相关
-        startswith()   str.startswitch(substr)             判断str是否以substr开头
-        endswith()    str.endswitch(substr)               判断str是否以substr结尾
+        startswith()    str.startswitch(substr)             判断str是否以substr开头
+        endswith()      str.endswitch(substr)               判断str是否以substr结尾
         isalnum()       str.isalnum()                       判断str是否全为字母或数字
         isalpha()       str.isalpha()                       判断str是否全为字母
         isdigit()       str.isdigit()                       判断str是否全为数字
@@ -1882,7 +1881,7 @@ print '10/2.=',action(10,2)
     2.使用map()函数
     map()函数将指定序列中的所有函数作为参数调用指定函数，并将结果构成一个新的序列返回：
         结果序列 = map(映射函数, 序列1[, 序列2, ...])
-    map()函数的参数中，序列数取决于银蛇函数的参数数量。
+    map()函数的参数中，序列数取决于映射函数的参数数量。
     序列1、序列2等元素会按顺序作为映射函数的参数，映射函数的返回值将作为map()函数返回序列的元素。
     """
     '''
@@ -2049,28 +2048,24 @@ for index,value in enumerate(list):
     生成器的返回值有一个__next__()方法，恢复生成器执行，并直到下一个yield表达式处。
     """
     '''
-print '【4-43】生成器的实例。'
+    print '【4-43】生成器的实例。'
 def addlist(alist):
     for i in alist:
         yield i + 1
 alist = [1, 2, 3, 4]
 for x in addlist(alist):
     print x
-'''
 print '【4-44】__next__()方法实现[4-43]的功能。'
 def addlist(alist):
     for i in alist:
         yield i + 1
 alist = [1, 2, 3, 4]
 x = addlist(alist)
-x = x.__next__()
-print x
-x = x.__next__()
-print x
-x = x.__next__()
-print x
-x = x.__next__()
-print x
+print x.next()
+print x.next()
+print x.next()
+print x.next()
+    '''
 
 if __name__ == "__main__":
     # c2 = Chapter2()
