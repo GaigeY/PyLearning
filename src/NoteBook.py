@@ -2067,10 +2067,481 @@ print x.next()
 print x.next()
     '''
 
+class Chapter5():
+    """
+    -** 5 **- Python模块
+    模块是Python语言一个重要概念，将函数按功能划分到一起，以便日后使用或共享。
+    知识要点：
+        模块的基本概念        random模块
+        sys模块               fractions模块
+        math模块              time模块
+        decimal模块           platform模块
+        自定义模块
+    """
+
+    """
+    5.1 模块的概念
+    """
+
+    """
+    5.1.1 什么是模块
+    函数是可以实现一项或多项功能的一段程序；模块是很多功能的扩展，是可以一项或多项功能的程序块。
+    模块的范围比函数要广。模块里可以重用多个函数。
+    Python的模块以.py文件的形式储存。
+    
+    5.1.2 如何导入模块
+    使用模块前必先导入：
+        import 模块名
+    访问模块中的函数：
+        模块名.函数名(参数列表)
+    访问模块中的变量：
+        模块名.变量
+    """
+
+    """
+    5.2 Python标准库中的常用模块
+    Python标准库是Python自带的开发包，是Python的组成部分，会随Python解释器一起安装在系统中。
+    """
+
+    def Example5_2_1(self):
+        """
+        5.2.1 sys模块
+        """
+        import sys
+
+        """
+        sys模块是Python标准库中最常用的模块之一。
+        sys模块获得命令行参数，从而实现从程序外部向程序传递参数的功能；也可以获取程序路径和当前系统平台等信息。
+        1.获取当前的操作系统平台
+        使用sys.platform获取当前的操作系统平台
+        """
+
+        print '【5-1】使用变量sys.platform打印当前的操作系统平台。'
+        print sys.platform
+
+        """
+        2.使用命令行参数
+        命令行参数是运行程序时命令行中给定的参数。例如：
+            python command.py a b c
+        a,b,c连同command.py都是命令行参数，可以向程序中传递数据。
+        sys模块的argv数组用于获取Python命令行参数。sys.arg[0]是当前运行的脚本文件名，sys.arg[1]是第一个命令行参数，sys.arg[2]是第二个命令行参数。
+        3.退出应用程序
+        sys.exit()函数退出应用程序：
+            sys.exit(n)
+        n=0时程序无错误退出；n=1时程序有错误退出。
+        """
+
+        print '【5-2】打印命令行参数：打开命令行窗口，切到src目录，输入"Python例5-2.py a b c"'
+        print '【5-3】使用sys.exit()函数的例子'
+
+        """
+        4.字符编码
+        对字母和符号进行编码的二进制代码称为字符代码。
+        常用的字符编码为ASCII码（美国标准信息交换码）。
+        常用的处理中文的字符编码包括GB2312、GBK和BIG5等。
+            GB2312编码：中华人民共和国国家汉字信息交换用编码，全称《信息交换用汉字编码字符集——基本集》。大陆和新加坡等地使用。
+            GBK编码：汉字内码扩展规范。繁简一库。
+            BIG5编码：一种繁体中文汉字字符集，与GB2312存在冲突。
+        UTF-8:8-bit Unicode Transformation Format，又称万国码。
+        
+        sys.getdefaultencoding()函数用于获取系统当前编码。
+        
+        5.搜索模块的路径
+        sys.path()获取搜索模块的路径。
+        """
+
+        print '【5-4】打印系统当前编码。'
+        print sys.getdefaultencoding()
+
+        print '【5-5】打印Python搜索模块的路径。'
+        print sys.path
+
+        """
+        sys.path实际上是一个列表，第一个元素就是当前程序所在是目录。
+        如需Python到制定目录搜索模块文件，向sys.path中添加指定的目录：
+            sys.path.append(指定的目录)
+        """
+
+    def Example5_2_2(self):
+        """
+        5.2.2 platform模块
+        """
+        import platform
+
+        """
+        python中，platform模块给我们提供了很多方法去获取操作系统的信息
+        如：
+            platform.platform()     #获取操作系统名称及版本号，'Windows-7-6.1.7601-SP1'
+            platform.version()      #获取操作系统版本号，'6.1.7601'
+            platform.architecture() #获取操作系统的位数，('32bit', 'WindowsPE')
+            platform.machine()      #计算机类型，'x86'
+            platform.node()         #计算机的网络名称，'hongjie-PC'
+            platform.processor()    #计算机处理器信息，'x86 Family 16 Model 6 Stepping 3, AuthenticAMD'
+            platform.uname()        #包含上面所有的信息汇总，uname_result(system='Windows', node='hongjie-PC',
+                                        release='7', version='6.1.7601', machine='x86', processor='x86 Family
+                                        16 Model 6 Stepping 3, AuthenticAMD')
+        
+        还可以获得计算机中python的一些信息：
+            platform.python_build()
+            platform.python_compiler()
+            platform.python_branch()
+            platform.python_implementation()
+            platform.python_revision()
+            platform.python_version()
+            platform.python_version_tuple()
+        """
+
+        print '【5-6】打印当前操作系统名称及版本号。'
+        print platform.platform()
+
+        print '【5-7】打印当前操作系统类型。'
+        print platform.system()
+
+        print '【5-8】打印当前操作系统的版本信息。'
+        print platform.version()
+
+        print '【5-9】打印当前操作系统的位数。'
+        print platform.architecture()
+
+        print '【5-10】打印当前计算机的类型信息。'
+        print platform.machine()
+
+        print '【5-11】打印当前计算机的网络名称。'
+        print platform.node()
+
+        print '【5-12】打印当前计算机的处理器信息。'
+        print platform.processor()
+
+        print '【5-13】打印当前计算机的综合信息。'
+        print platform.uname()
+
+        print '【5-14】打印Python版本信息。'
+        print platform.python_build()
+
+        print '【5-15】打印Python主版本信息。'
+        print platform.python_version()
+        print platform.python_version_tuple()
+
+        """
+        platform.python_version()函数获取Python的修订版本信息。
+        修订版本是版本库的一个快照（每次修改的备份），当版本库不断扩大时，必须有手段来识别这些快照。
+        因此需要为每个修订版本定义修订版本号。
+        """
+
+        print '【5-16】打印Python的编译器信息。'
+        print platform.python_compiler()
+
+        """
+        获取Python分支信息
+        分支是软件控制中的一个概念，一个分支是某个开发主线的一个拷贝，分支可以为特定客户实现需求。
+        分支的意义在于，在不干扰开发主线的情况下，和主线并行开发，待开发结束后合并回主线中。
+        可以在主线上创建分支，再在分支上创建分支。
+        """
+
+        print '【5-17】打印Python的分支信息。'
+        print platform.python_branch()
+
+        """
+        获取Python解释器的实现版本信息
+        Python的解释器版本有很多种实现方式：
+            CPython：
+                默认的python实现。
+                脚本大多数情况下都运行在这个解释器中。
+                CPython是官方的python解释器，完全按照python的规格和语言定义来实现，所以被当作其他版本实现的参考版本。
+                CPython是用C语言写的，当执行代码的时候Pythond代码会被转化成字节码（bytecode）。
+                所以CPython是个字节码解释器。
+                当我们从Python官网下载安装包安装，或者是通过类似 "apt-get" 或者 "yum"工具安装的时候，安装的都是CPython版本。
+            PyPy
+                一个很多地方都和CPython很像的实现，但是这个解释器本身就是由Python写成。
+                然而这个解释器的代码先转化成C，然后在编译。
+                PyPy被认为要比CPython性能更好，因为CPython会把代码转化成字节码，PyPy会把代码转化成机器码。
+            Psyco
+                一个类似PyPy，但是很好的解释器。
+                现在已经被PyPy取代了，有可能的话，使用PyPy来代替Psyco。
+            Jython
+                用java实现的一个解释器。Jython允许程序员写Python代码，还可以把java的模块加载在python的模块中使用。
+            IronPython
+                使用C#语言实现，可以使用在.NET 和 Mono 平台的解释器。
+                tip: Mono 是提供.NET-compatible 工具的开源框架。
+            CLPython
+                用Common Lisp实现的解释器，现在不提倡使用。
+                它允许Python和Common Lisp的代码混合使用。
+                跟Python2兼容。
+            PyS60(Python for S60)
+                是诺基亚 S60 平台的一个实现版本，不赞成使用。
+            ActivePython
+                基于CPython然后添加一系列拓展的一个实现。
+                是由ActiveState发布的。Python2 和 Python3 都兼容。
+            Cython(不是CPython)
+                一个允许把Python代码转化成C/C++代码或者使用各种各样的C/C++模块/文件的实现。
+                换句话说，Cython是C/C++ 和Python的一个桥梁。
+                Cython也是Python的一种方言。开发者也可以使用Cython来执行Python脚本，并且执行效率比CPython更快。
+                tips: Python 模块 modules 和 类库libraries是一个东西，只是叫法不同。
+            QPython
+                CPython解释器的一个安卓接口。
+                QPython来自Python的安卓模块。
+                可以在 Google Play中找到QPython。
+            Kivy
+                一个开源的框架(使用Python解释器)，它可以运行在 Android, iOS, Windows, Linux, MeeGo, Android SDK, 和 OS X平台上。
+                支持Python3，开发者正在开发其兼容Cython上的Python3。
+            SL4A (Scripting Layer for Android)
+            一个允许安卓上执行各种脚本语言的兼容层。
+            SL4A 有很多的模块，我们比较关注的是“Py4A” (Python for Android)。
+            Py4A 是安卓平台上的一种CPython。
+        其他
+            还有很多其他的不同实现。例如WPython，DSPython 请参见 Wiki。
+        """
+
+        print '【5-18】打印Python解释器的实现版本信息。'
+        print platform.python_implementation()
+
+    def Example5_2_3(self):
+        """
+        5.2.3 与数学有关的模块
+        """
+        import math
+        import random
+        import fractions
+
+        """
+        包括math模块、random模块、decimal模块和fractions模块。
+        
+        1.math模块
+        math模块用于数学处理，可以实现基本数学运算：
+            import math
+        math模块定义了e和pi两个常量。
+        """
+
+        print '【5-19】打印e和pi的值。'
+        print math.e,math.pi
+
+        """
+        math模块的常用方法：
+            asin            math.asin(x)            返回x的反正弦
+            asinh           math.asinh(x)           返回x的反双曲正弦
+            atan            math.atan(x)            返回x的反正切
+            atan2           math.atan2(x)           返回y/x的反正切
+            atanh           math.atanh(x)           返回x的反双曲正切
+            ceil            math.ceil(x)            返回大于等于x的最小整数
+            copysign        math.copysign(x,y)      返回与y同号的x的值
+            cos             math.cos(x)             返回x的余弦
+            cosh            math.cosh(x)            返回x的余切
+            degrees         math.degrees(x)         将x弧长转为角度，与radians为反函数
+            exp             math.exp(x)             返回e^x
+            fabs            math.fabs(x)            返回x的绝对值
+            factorial       math.factorial(x)       返回x!
+            floor           math.floor(x)           返回小于等于x的最大整数
+            fmod            math.fmod(x,y)          返回x对y取模的余数
+            fsum            math.fsum(x)            返回x阵列值的各项和
+            hypot           math.hypot(x,y)         返回x,y的平方和开方
+            isinf           math.isinf(x)           x为无穷大则返回True，否则返回False
+            isnan           math.isnan(x)           x不是数字则返回True，否则返回False
+            log             math.log(x,a)           返回log_a x，a默认为e
+            log10           math.log10(x)           返回lg x
+            pow             math.pow(x,y)           返回x^y
+            radians         math.radians(c)         将x角度转为弧长，与degree为反函数
+            sin             math.sin(x)             返回x的正弦
+            sinh            math.sinh(x)            返回x的双曲正弦
+            sqrt            math.sqrt(x)            返回x的开方
+            tan             math.tan(x)             返回x的正切
+            tanh            math.tanh(x)            返回x的双曲正切
+            trunc           math.trunc(x)           返回x的整数部分
+        """
+
+        print '【5-20】math模块的实例。'
+        print 'math.ceil(3.4) =',math.ceil(3.4)
+        print 'math.fabs(-3) =',math.fabs(-3)
+        print 'math.floor(3.4) =',math.floor(3.4)
+        print 'math.sqrt(4) =',math.sqrt(4)
+        print 'math.trunc(3.4) =',math.trunc(3.4)
+
+        """
+        2.random模块
+        random模块用于生成随机数。
+            random          random.random()                             生成一个[0,1)的随机浮点数
+            uniform         random.uniform(a,b)                         生成一个[a,b]或[b,a]的随机浮点数
+            randint         random.randint(a,b)                         生成一个[a,b]的随机整数
+            randrange       random.randrange([start],stop[,step])       生成一个[star,stop)内star+i*step的随机数
+            choice          random.choice(sequence)                     从序列seq中随机获取一个元素
+            shuffle         random.shuffle(x[,random])                  将列表x中的元素打乱
+            sample          random.sample(sequence,k)                   从指定序列中随机获取长度为k的片段
+        """
+
+        print '【5-21】随机生成一个0-100的整数。'
+        print random.randint(0,99)
+
+        print '【5-22】随机选取一个0-100的偶数。'
+        print random.randrange(0, 101, 2)
+
+        print '【5-23】随机选取一个浮点数。'
+        print random.random
+
+        print '【5-24】从指定字符集合里随机选取一个字符。'
+        print random.choice('jioadsf$@#&%^()$@%')
+
+        print '【5-25】将一个列表中的元素打乱。'
+        list = [1, 2, 3, 4, 5, 6]
+        print random.shuffle(list)
+        print list
+
+        print '【5-26】从指定序列中随机获取指定长度的片段。'
+        print random.sample(list,3)
+
+        """
+        3.decimal模块
+        浮点数缺乏精确性，decimal模块提供了一个Decimal数据类型用于浮点数计算。
+        与内置二进制浮点数实现float相比，Decimal数据类型更适用于金融应用和其他需要精确十进制表达的情况。
+        导入decimal模块：
+            from decimal import Decimal
+        定义Decimal类型的数据：
+            Decimal(数字字符串)
+        
+        Decimal在一个独立的上下文环境下工作，通过getcontext()方法获取当前环境。
+        例如，decimal.getcontext().prec用于设定小数点精度。
+        导入getcontext：
+            from decimal import getcontext
+        """
+
+        print '【5-27】Decimal数据类型的实例。'
+        from decimal import Decimal
+        print Decimal('1.0') / Decimal('3.0')
+
+        print '【5-28】getcontext的实例。'
+        from decimal import getcontext
+        getcontext().prec = 6
+        print Decimal('1.0') / Decimal('3.0')
+
+        """
+        4.fractions模块
+        fractions模块用于表现和处理分数。
+        首先要导入模块：
+            import fractions
+        定义分数数据的方法：
+            x = fractions.Fraction(分子，分母)
+        
+        Fraction对象会自动进行约分。
+        """
+
+        print '【5-29】fractions模块定义分数的实例。'
+        x = fractions.Fraction(1, 3)
+        print x
+
+        print '【5-30】Fraction对象自动约分的实例。'
+        x = fractions.Fraction(1, 6)
+        print x * 4
+
+    def Example5_2_4(self):
+        """
+        5.2.4 time模块
+        """
+        import time
+
+        """
+        time模块是Python标准库中最常用的模块之一，time模块可以提供各种操作时间的函数。
+        
+        1.时间的表示方式
+        计算机可以使用时间戳和struct_time数组两种方式表示时间。
+        Unix时间戳（Unix Timestamp）或称Unix时间（Unix Time）、POSIX时间（POSIX Time）是格林尼治时间1970年元旦零点起至当前的秒数。
+        struct_time数组包含9个元素，具体如下：
+            year        四位数的年份
+            month       月份
+            day         日期
+            hours       小时
+            minutes     分钟
+            seconds     秒
+            weekday     星期，星期一为0
+            Julia day   一年有几天，1-366
+            DST         是否为夏令时
+        
+        2.获取当前时间
+        time.time()函数用于获取当前时间的时间戳。
+        
+        3.将一个时间戳转换成一个当前时区的时间戳
+        time.localtime()函数用于转换当前时区的struct_time。
+        
+        4.格式化输出struct_time时间
+        time.strftime()函数按照指定的格式输出struct_time时间：
+            time.strftime(格式字符串, struct_time时间)
+        可以使用的日期和时间符号如下：
+            %y  两位数的年份表示    00-99
+            %Y  四位数的年份表示  0000-9999
+            %m  月份                01-12
+            %d  月内中的一天         0-31
+            %H  24小时制小时数       0-23
+            %I  12小时制小时数      01-12
+            %M  分钟数              00-59
+            %S  秒数                00-59
+            %a  本地简化的星期名称
+            %A  本地完整化的星期名称
+            %b  本地简化的月份名称
+            %B  本地完整化的月份名称
+            %c  本地相应的日期表示和时间表示
+            %j  年内的一天          001-366
+            %p  本地A.M.或P.M.
+            %U  一年中的星期数       00-53     星期日是一星期的开始
+            %w  星期                  0-6      星期日是一星期的开始
+            %W  一年中的星期数       00-53     星期一是一星期的开始
+            %x  本地相应的日期表示
+            %X  本地相应的时间表示
+            %Z  当前时区的名称
+            %%  %号本身
+        
+        5.直接获取当前时间的字符串
+        time.ctime()返回当前时间的字符串。
+        """
+
+        print '【5-31】time.time()函数的实例。'
+        print time.time()
+
+        print '【5-32】time.localtime()函数的实例。'
+        print time.localtime(time.time())
+
+        print '【5-33】time.strftime()函数的实例。'
+        print time.strftime('%Y-%m-%d',time.localtime(time.time()))
+
+        print '【5-34】time.ctime()函数的实例'
+        print time.ctime()
+
+    """
+    5.3 自定义和使用模块
+    """
+
+    def Example5_3_3(self):
+        """
+        5.3.1 创建自定义模块
+        """
+        """
+        把函数组织到模块中。
+        在其他程序引用模块中定义的函数。
+        增加代码的重用性。
+        
+        模块是一个.py文件，其中包含函数的定义。
+        """
+
+        print '【5-35】创建一个模块mymodule.py，其中包含2个函数PrintString和sum()。'
+
+        """
+        一个应用程序中可以定义多个模块，通常使用易读的名字标识它们。例如数学相关为mymath.py，数据库相关为mydb.py。
+        """
+
+    def Example5_3_4(self):
+        """
+        5.3.2 使用自定义模块
+        """
+        """
+        导入自定义模块的方法与导入Python标准库中模块的方法相同。
+        """
+
+        print '【5-36】假定[5-35]创建的模块mymodule.py与本例保存在同一目录下，引用其中的函数。'
+        import mymodule # 导入mymodule模块
+        mymodule.PrintString("Hello Python") # 调用PrintString()函数
+        mymodule.sum(1,2)   # 调用sum()函数
+
 if __name__ == "__main__":
     # c2 = Chapter2()
     # c3 = Chapter3()
-    c4 = Chapter4()
+    # c4 = Chapter4()
+    c5 = Chapter5()
     # c2.Example2_1_1()
     # c2.Example2_1_2()
     # c2.Example2_1_3()
@@ -2085,3 +2556,9 @@ if __name__ == "__main__":
     # c3.Example3_2_1()
     # c3.Example3_2_2()
     # c3.Example3_3()
+    # c5.Example5_2_1()
+    # c5.Example5_2_2()
+    # c5.Example5_2_3()
+    # c5.Example5_2_4()
+    # c5.Example5_3_3()
+    c5.Example5_3_4()
