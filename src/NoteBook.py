@@ -2537,11 +2537,477 @@ class Chapter5():
         mymodule.PrintString("Hello Python") # 调用PrintString()函数
         mymodule.sum(1,2)   # 调用sum()函数
 
+class Chapter6():
+    """
+    -** 6 **- I/O编程
+    I/O是Input/Output的缩写，即输入输出缩写。
+    I/O编程是一个程序设计语言的基本功能，常用的I/O操作包括键盘输入数据、屏幕上打印信息和读写磁盘等。
+    知识要点：
+        输入数据        关闭文件
+        打开文件        写入文件
+        读取文件内容    截断文件
+        文件指针        复制文件
+        文件属性        删除文件
+        移动文件        获取当前目录
+        重命名文件      创建目录
+        获取目录内容    删除目录
+    """
+
+    """
+    6.1 输入和显示数据
+    """
+
+    def Example6_1_1(self):
+        """
+        6.1.1 输入数据
+        """
+        """
+        input()函数接受用户输入的数据：
+            用户输入的数据 = input(提示字符串)
+        """
+
+        print '【6-1】input()函数接受用户输入的实例。'
+        name = input("请输入您的姓名：")
+        print '=================='
+        print "您好，" + name
+
+        # Caution! Python2.7中输入必须加引号，否则报错
+
+    def Example6_1_2(self):
+        """
+        6.1.2 输出数据
+        """
+        """
+        print()函数的使用。
+        
+        1.输出字符串
+        print()函数最简单的应用就是输出字符串：
+            print(字符串常量或字符串变量)
+        介绍格式化参数的形式输出字符串的方法。
+        输出字符串中以%s作为参数，代表后面指定要输出的字符串：
+            print("...%s..." %(string))
+        print()函数的参数列表可以有多个参数：
+            print("...%s...%s..." %(string1, string2,...stringN))
+        """
+
+        print '【6-2】格式化参数的形式输出字符串。'
+        name = 'Python'
+        print '你好，%s！' % name
+
+        print '【6-3】print()函数使用多个参数。'
+        yourname = '小李'
+        myname = '小明'
+        print '您好，%s！我是%s。' % (yourname,myname)
+
+        """
+        2.格式化输出整数
+        print()函数支持以格式化参数的形式输出整数：
+            print("...%d...%d..." %(整数1, 整数2,...,整数N))
+        %s和%d可同时使用。
+        %d用于输出十进制整数。格式化参数中可以指定输出十六进制和八进制的整数：
+            %x，用于输出十六进制整数
+            %o，用于输出八进制整数
+        """
+
+        print '【6-4】格式化输出整数的实例。'
+        i = 1
+        j = 2
+        print "%d+%d=%d" %(i,j,i+j)
+
+        print '【6-5】格式化输出时同时使用%s和%d。'
+        strHello = 'Hello World'
+        print 'The length of (%s) is %d.' %(strHello,len(strHello))
+
+        print '【6-6】使用print()函数输出255对应的十六和八进制整数。'
+        print "255对应的十六进制整数是%x，对应的八进制整数是%o。" %(255,255)
+
+        """
+        3.格式化输出浮点数
+        print()函数的格式化参数中，%f用于输出浮点数。
+        %f中可以指定浮点数的总长度和小数部分位数：
+            %总长度.小数部分位数f
+        浮点数的总长度为整数部分、小数点和小数部分的长度之和。
+        如果总长度小于指定总长度，输出时会在浮点数前以空格补齐。
+        """
+
+        print '【6-7】print()函数输出100/3的值。'
+        print "100/3=%f" %(100.0/3)
+
+        print '【6-8】print()函数输出100/3的值，总长度为10，小数部分位数为3。'
+        print "100/3=%10.3f" %(100.0/3)
+
+    """
+    6.2 文件操作
+    文件系统是操作系统的重要组成部分，它用于明确磁盘或分区上文件的组织形式和保存方法。
+    应用程序中，文件是保存数据的重要途径之一。经常需要创建文件保存数据，或从文件中读取数据。
+        6.2.1 打开文件
+        读写文件之前，需要打开文件。调用open()函数打开文件：
+            文件对象 = open(文件名,访问模式,buffering)
+        参数文件名用于指定要打开的文件，通常需要包含路径（也可以是相对路径）。
+        参数访问模式用于指定打开文件的模式。
+            r       以读方式打开
+            w       以写方式打开，文件内容会被清空         必要时创建新文件。
+            a       以追加的模式打开，从文件末尾开始       必要时创建新文件。
+            r+      以读写模式打开
+            w+      以读写模式打开
+            a+      以追加的读写模式打开
+            rb      以二进制读模式打开
+            wb      以二进制写模式打开
+            ab      以二进制追加模式打开
+            rb+     以二进制读写模式打开
+            wb+     以二进制读写模式打开
+            ab+     以二进制追加的读写模式打开
+        
+        整形参数buffering是可选参数，用于指定访问文件所采用的缓冲方式。
+            buffering默认为-1，表示全缓冲模式
+            buffering=0，表示无缓冲模式，直接对硬盘读写
+            buffering=1，表示行缓冲模式，对内存读写，flush或close才会写入硬盘
+        
+        6.2.2 关闭文件
+        操作完成后，调用close()方法关闭文件，释放文件资源：
+            f = open(文件名,访问模式,buffering)
+            使用对象f进行读写操作...
+            f.close()
+        """
+
+    def Example6_2_3(self):
+        """
+        6.2.3 读取文件内容
+        """
+        """
+        1.read()方法
+        read()可用于读取文件内容：
+            str = f.read([b])
+        参数说明如下：
+            f：读取内容的文件对象。
+            b：可选参数，指定读取的字节数。默认为读取全部内容。
+            读取内容返回到字符串str中。
+        """
+
+        print '【6-9】read()读取文件的例子。'
+        f = open("..\\data\\test.txt")      # 打开文件，返回一个文件对象
+        str = f.read()                      # 调用文件的read()方法读取文件内容
+        f.close()                           # 关闭文件
+        print str
+
+        print '【6-10】read()读取文件内容的例子，每次读取10字节。'
+        f = open("..\\data\\test.txt")      # 打开文件，返回一个文件对象
+        while True:                         # 循环读取
+            chunk = f.read(10)              # 每次读去10个字节到chunk
+            if not chunk:                   # 如果没有读到内容，则退出循环
+                break
+            print chunk                     # 打印chunk
+        f.close()                           # 关闭文件
+
+        """
+        2.readlines()方法
+        readlines()方法可以读取文件中的所有行：
+            list = f.readlines()
+        参数说明如下：
+            f：读取内容的文件对象。
+            读取的内容返回到字符串列表list中。
+        """
+
+        print '【6-11】readlines()方法读取文件内容的实例。'
+        f = open("..\\data\\test.txt")      # 打开文件，返回一个文件对象
+        list = f.readlines()                # 调用文件的readlines()方法读取文件内容
+        f.close()                           # 关闭文件
+        print list
+
+        """
+        3.readline()方法
+        readline()方法是一次性读取文件中的所有行。
+        readline()方法逐行读取文件内容：
+            str = f.readline()
+        参数说明如下：
+            f：读取内容的文件对象。
+            读取的内容返回到字符串str中。
+        """
+
+        print '【6-12】readline()方法读取文件内容的实例。'
+        f = open("..\\data\\test.txt")      # 打开文件，返回一个函数对象
+        while True:                         # 循环读取
+            chunk = f.readline()            # 每次读一行
+            if not chunk:                   # 如果没有读取到内容，则退出循环
+                break
+            print chunk                     # 打印chunk
+        f.close()                           # 关闭文件
+        # print()会自动输出换行。
+
+        """
+        4.使用in关键字
+        使用in关键字可以遍历文件中的所有行：
+            for line in 文件对象:
+                处理行数据line
+        """
+
+        print '【6-13】使用in关键字方法读取文件内容的例子。'
+        f = open("..\\data\\test.data")     # 打开文件，返回一个文件对象
+        for line in f:
+            print line                      # 打印line
+        f.close()                           # 关闭文件
+
+    def Example6_2_4(self):
+        """
+        6.2.4 向文件中写入数据
+        """
+        """
+        1.write()方法
+        write()方法向文件中写入内容：
+            f.write(内容)
+        参数f是写入内容的文件对象。
+        
+        2.追加写入
+        以w为参数调用open()方法时，如果写入文件，则会覆盖文件的内容。
+        如果希望追加内容，以a或a+为参数调用open()方法打开文件。
+        """
+
+        print '【6-14~15】write()方法写入和追加写入文件内容的实例。'
+        fname = input("请输入文件名：")
+        f = open('..\\data\\'+fname, 'w')                    # 打开文件，返回一个文件对象
+        content = input("请输入要写入的内容：")
+        f.write(content)
+        f.close()                               # 关闭文件
+        f = open('..\\data\\'+fname, 'a')                    # 以追加模式打开文件，返回一个文件对象
+        f.write("这是追加写入的内容，原文件内容应该被保留")
+        f.close()                               # 关闭文件
+
+        """
+        3.writelines()方法
+        writelines()方法向文件中写入字符串序列：
+            f.writelines(seq)
+        参数f是写入内容的文件对象，参数seq是个返回字符串的序列（列表、元组、集合、字典等）。
+        注意，写入是序列元素后面不会被追加换行符。
+        """
+
+        print '【6-16】writelines()方法写入文件内容的实例。'
+        menulist = ['红烧肉', '熘肝尖', '西红柿炒鸡蛋', '油焖大虾']
+        fname = input("请输入文件名：")
+        f = open('..\\data\\'+fname,'w')                     # 打开文件，返回一个文件对象
+        f.writelines(menulist)                  # 向文件中写入列表menulist的内容
+        f.close()                               # 关闭文件
+
+    def Example6_2_5(self):
+        """
+        6.2.5 文件指针
+        """
+        """
+        1.获取文件指针的位置
+        调用tell()方法获取文件指针的位置：
+            pos = 文件对象.tell()
+        tell()方法返回一个整数，表示文件指针的位置。
+        打开一个文件时，文件指针的位置为0。
+        读写文件时，文件指针的位置会前移至读写的最后位置。
+        """
+
+        print '【6-17】tell()方法获取文件指针位置的实例。'
+        f = open("..\\data\\6-17.txt",'w')      # 以写入方式打开文件
+        print f.tell()                          # 输出0
+        f.write('hello')                        # 加入一个长为5的字符串[0-4]
+        print f.tell()                          # 输出5
+        f.write('Python')                       # 加入一个长为6的字符串[5-10]
+        print f.tell()                          # 输出11
+        f.close()                               # 关闭文件，为重新测试读取文件时文件指针的位置做准备
+        f = open("..\\data\\6-17.txt",'r')      # 以读取方式打开文件
+        str = f.read(5)                         # 读取5个字节的字符串[0-4]
+        print f.tell()                          # 输出5
+        f.close()                               # 关闭文件
+
+        """
+        2.移动文件指针
+        调用seek()方法手动移动文件指针的位置：
+            文件对象.seek(offset,where)
+        参数说明如下：
+            offset：移动的偏移量，单位为字节。正后移，负前移。
+            where：指定从何处开始移动。0从起始位置移动，1从当前位置移动，2从结束位置移动。
+        """
+
+        print '【6-18】seek()方法移动文件指针的实例。'
+        f = open('..\\data\\6-18.txt','w+')     # 以读写模式打开文件
+        print f.tell()                          # 打印文件指针，0
+        f.write('Hello')                        # 加入一个长为5的字符串[0-4]
+        print f.tell()                          # 打印文件指针，5
+        f.seek(0,0)                             # 移动文件指针至开始
+        print f.tell()                          # 打印文件指针，0
+        str = f.readline()
+        print str                               # 打印读取的文件数据'Hello'
+        f.close()                               # 关闭文件
+
+    def Example6_2_6(self):
+        """
+        6.2.6 截断文件
+        """
+        """
+        truncate()方法从文件头开始截取文件：
+            文件对象.truncate([size])
+        参数size指定要截取的文件大小，单位为字节，size后面的文件内容将被丢弃。
+        """
+
+        print '【6-19】truncate方法截断文件的例子。'
+        f = open('..\\data\\6-19.txt','w')                # 以写模式打开文件
+        f.write('Hello Python')                 # 写入一个字符串
+        f.truncate(5)                           # 截断文件
+
+    def Example6_2_7(self):
+        """
+        6.2.7 文件属性
+        """
+        import os, stat, time
+
+        """
+        os模块的start()函数用于获取文件的创建时间、修改时间、访问时间、文件大小等文件属性：
+            文件属性元组 = os.start(文件路径)
+        
+        返回的文件属性元组元素的含义如下所示：
+            0   权限模式
+            1   inode number，记录文件的存储位置
+            2   存储文件的设备编号
+            3   文件的硬链接数量
+            4   文件所有者的用户ID（user id）
+            5   文件所有者的用户组ID（user id）
+            6   文件大小，单位为字节
+            7   最近访问的时间
+            8   最近修改的时间
+            9   创建的时间
+        
+        可以使用索引访问返回的文件属性元组元素。
+        stat模块中定义了文件属性元组索引对应的常量：
+            0   stat.ST_MODE
+            6   stat.ST_SIZE
+            7   stat.ST_MTIME
+            8   stat.ST_ATIME
+            9   stat.ST_CTIME
+            
+        时间可以使用time模块的ctime()函数转换成可读的时间字符串。
+        """
+
+        print '【6-20】打印指定文件的属性信息。'
+        fileStats = os.stat('..\\data\\test.txt')
+        print fileStats
+
+        print '【6-21】打印指定文件的属性信息。'
+        print fileStats[stat.ST_SIZE]
+        print fileStats[stat.ST_MTIME]
+        print fileStats[stat.ST_ATIME]
+        print fileStats[stat.ST_CTIME]
+
+        print '【6-22】打印指定文件的创建时间。'
+        print time.ctime(fileStats[stat.ST_CTIME])
+
+    def Example6_2_8(self):
+        """
+        6.2.8 复制文件
+        """
+        import shutil
+
+        """
+        shutil模块的copy()函数可以复制文件：
+            copy(src, dst)
+        copy()函数将源文件src复制到dst
+        """
+
+        print '【6-23】复制文件的实例。'
+        shutil.copy('..\\data\\test.txt', '..\\dst\\test.txt')
+
+    def Example6_2_9(self):
+        """
+        6.2.9 移动文件
+        """
+        import shutil
+
+        """
+        shutil模块的move()函数可以移动文件：
+            move(src, dst)
+        """
+
+        print '【6-24】移动文件的实例。'
+        shutil.move('..\\dst\\test.txt', '..\\data\\test.txt')
+
+    def Example6_2_10(self):
+        """
+        6.2.10 删除文件
+        """
+        import os
+
+        """
+        os模块的remove()函数可以删除文件：
+            os.remove(src)
+        src指定要删除的文件。
+        """
+
+        print '【6-25】删除文件的实例。'
+        os.remove('..\\dst\\text.txt')
+
+    def Example6_2_11(self):
+        """
+        6.2.11 重命名文件
+        """
+        import os
+
+        """
+        os模块的rename()函数可以重命名文件：
+            os.rename(原文件名,新文件名)
+        """
+
+        print '【6-26】重命名文件的实例。'
+        os.rename('..\\dst\\test.txt', '..\\dst\\t.txt')
+
+    """
+    6.3 目录编程
+    """
+
+    def Example6_3(self):
+        """
+        目录也称为文件夹，是文件系统中用于组织和管理文件的逻辑对象。
+        应用程序中，常见的目录操作包括创建目录、重命名目录、删除目录、获取当前目录和获取目录内容等。
+        """
+        import os
+
+        """
+        6.3.1 获取当前目录
+        os模块的getcwd()函数可以获取当前目录：
+            os.getcwd
+        """
+
+        print '【6-27】打印当前目录。'
+        print os.getcwd()
+
+        """
+        6.3.2 获取目录内容
+        os模块的listdir()函数可以获得指定目录中的内容：
+            os.listdir(path)
+        参数path指定要获得内容目录的路径。
+        """
+
+        print '【6-28】打印项目目录内容。'
+        print os.listdir('..')
+
+        """
+        6.3.3 创建目录
+        os模块的mkdir()函数可以创建目录：
+            os.mkdir(path)
+        参数path指定要创建的目录。
+        """
+
+        print '【6-29】创建..\\mydir的内容。'
+        os.mkdir('..\\mydir')
+
+        """
+        6.3.4 删除目录
+        os模块的rmdir()函数可以删除目录：
+            os.rmdir(path)
+        path指定要删除的目录。
+        """
+
+        print '【6-30】删除..\\mydir的内容。'
+        os.rmdir('..\\mydir')
+
 if __name__ == "__main__":
     # c2 = Chapter2()
     # c3 = Chapter3()
     # c4 = Chapter4()
-    c5 = Chapter5()
+    # c5 = Chapter5()
+    c6 = Chapter6()
     # c2.Example2_1_1()
     # c2.Example2_1_2()
     # c2.Example2_1_3()
@@ -2561,4 +3027,16 @@ if __name__ == "__main__":
     # c5.Example5_2_3()
     # c5.Example5_2_4()
     # c5.Example5_3_3()
-    c5.Example5_3_4()
+    # c5.Example5_3_4()
+    # c6.Example6_1_1()
+    # c6.Example6_1_2()
+    # c6.Example6_2_3()
+    # c6.Example6_2_4()
+    # c6.Example6_2_5()
+    # c6.Example6_2_6()
+    # c6.Example6_2_7()
+    # c6.Example6_2_8()
+    # c6.Example6_2_9()
+    # c6.Example6_2_10()
+    # c6.Example6_2_11()
+    # c6.Example6_3()
