@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6401dc59-6e4f-4386-a2fc-b2904b4c6892" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NoteBook.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/NoteBook.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,30 +22,34 @@
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.61" value="1" />
           <entry key="project.open.time.7" value="3" />
-          <entry key="project.open.time.8" value="4" />
+          <entry key="project.open.time.8" value="5" />
           <entry key="project.open.time.9" value="3" />
-          <entry key="project.opened" value="18" />
+          <entry key="project.opened" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="md" value="6" />
           <entry key="py" value="10" />
           <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key="Markdown" value="6" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="Python" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+          <entry key="md" value="3999" />
           <entry key="py" value="51233" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
+          <entry key="Markdown" value="3999" />
           <entry key="Python" value="51233" />
         </counts>
       </usages-collector>
@@ -54,7 +57,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/NoteBook.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="117">
@@ -76,18 +79,7 @@
                 <element signature="e#38532#38584#1" />
                 <element signature="e#38589#38965#1" />
                 <element signature="e#53207#57837#0" />
-                <element signature="e#65986#66254#0" />
-                <element signature="e#66325#67914#0" />
-                <element signature="e#68985#71317#0" />
                 <element signature="e#71339#72592#0" />
-                <element signature="e#72591#74340#0" />
-                <element signature="e#74359#74753#0" />
-                <element signature="e#74824#75977#0" />
-                <element signature="e#76023#76270#0" />
-                <element signature="e#76327#76559#0" />
-                <element signature="e#76602#76811#0" />
-                <element signature="e#76873#77086#0" />
-                <element signature="e#77169#78069#0" />
                 <marker date="1534865242389" expanded="true" signature="50960:78047" ph="..." />
                 <marker date="1534865242389" expanded="true" signature="51505:51510" ph="..." />
                 <marker date="1534865242389" expanded="true" signature="53171:53175" ph="..." />
@@ -97,15 +89,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mymodule.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-              <folding>
-                <marker date="1534518273040" expanded="true" signature="53:58" ph="..." />
-                <marker date="1534518273040" expanded="true" signature="93:98" ph="..." />
-              </folding>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Review.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="471">
+                <caret line="210" column="13" selection-start-line="210" selection-start-column="13" selection-end-line="210" selection-end-column="13" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -131,6 +122,9 @@
         <option value="$PROJECT_DIR$/src/5-3.py" />
         <option value="$PROJECT_DIR$/src/mymodule.py" />
         <option value="$PROJECT_DIR$/src/NoteBook.py" />
+        <option value="$PROJECT_DIR$/review.md" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/Review.md" />
       </list>
     </option>
   </component>
@@ -146,6 +140,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -171,7 +166,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -266,8 +260,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16441621" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16441621" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -316,12 +311,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
-          <folding>
-            <marker date="1533007983706" expanded="true" signature="292:297" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dst/test.txt" />
     <entry file="file://$PROJECT_DIR$/src/mymodule.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -333,8 +326,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dst/test.txt">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="57">
+            <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/NoteBook.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -357,23 +357,22 @@
             <element signature="e#38532#38584#1" />
             <element signature="e#38589#38965#1" />
             <element signature="e#53207#57837#0" />
-            <element signature="e#65986#66254#0" />
-            <element signature="e#66325#67914#0" />
-            <element signature="e#68985#71317#0" />
             <element signature="e#71339#72592#0" />
-            <element signature="e#72591#74340#0" />
-            <element signature="e#74359#74753#0" />
-            <element signature="e#74824#75977#0" />
-            <element signature="e#76023#76270#0" />
-            <element signature="e#76327#76559#0" />
-            <element signature="e#76602#76811#0" />
-            <element signature="e#76873#77086#0" />
-            <element signature="e#77169#78069#0" />
             <marker date="1534865242389" expanded="true" signature="50960:78047" ph="..." />
             <marker date="1534865242389" expanded="true" signature="51505:51510" ph="..." />
             <marker date="1534865242389" expanded="true" signature="53171:53175" ph="..." />
             <marker date="1534865242389" expanded="true" signature="65583:78047" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Review.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="471">
+            <caret line="210" column="13" selection-start-line="210" selection-start-column="13" selection-end-line="210" selection-end-column="13" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
