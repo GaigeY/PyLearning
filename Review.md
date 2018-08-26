@@ -1,7 +1,7 @@
 # 复习手册
 这是复习所用的笔记，具体代码详见Notebook.py。
 
-## Chapter 2
+## Chapter2 Python语言基础
 ### 1.常量和变量
 #### i.常量
 包括数字、字符串、布尔值、空值。可定义命名常量，Python中很复杂。
@@ -146,7 +146,7 @@ List = pickle.load(p);
 #### viii.对象的赋值
 新对象名 = 原有对象名
 
-## Chapter 3 常用Python语句
+## Chapter3 常用Python语句
 知识要点：赋值语句、循环语句、条件分支语句、异常处理语句。
 ### 1.赋值语句
 #### i.解包
@@ -168,7 +168,7 @@ try-except语句。
 
 不用记，用时查。
 
-## Chapter 4 Python函数
+## Chapter4 Python函数
 ### 1.声明和调用函数
 声明：def语句。
 ### 2.参数和返回值
@@ -209,3 +209,85 @@ zip函数
 
 ### 6.闭包和递归
 ### 7.迭代器和生成器
+
+## Chapter5 Python模块
+模块以.py形式储存，保存在Python主目录下的Lib目录中。
+
+import 模块名
+### 1.常用模块
+#### i.sys模块
+##### a.系统平台：sys.platform
+##### b.命令行参数：python command.py a b c
+##### c.退出应用：sys.exit(n)，0无误，1有误。
+##### d.系统编码：sys.getdefaultencoding()
+##### e.搜索路径：sys.path
+添加路径：sys.path.append(指定目录)
+
+#### ii.platform模块
+操作系统、Python版本等信息，详见Notebook文件。
+
+#### iii.数学相关
+math模块、random模块、decimal模块、fractions模块。
+
+四个表格，待补充。
+
+#### iv.time模块
+时间信息。
+##### a.当前时间戳：time.time()
+##### b.时间戳转换为当前时区：time.localtime()
+##### c.格式化输出时间戳：time.strftime(格式化字符串,struct_time)
+格式化字符串的符号规则见Notebook。
+##### d.直接获取当前时间：time.ctime()
+
+### 3.自定义和使用模块
+
+## Chapter6 I/O编程
+### 1.输入和显示数据
+输入数据 = input(提示字符串)
+
+print函数的用法：
+输出字符串和格式化输出数字。
+
+十六进制整数：%x。
+八进制整数：%o。
+
+浮点数用法：%总长度.小数位数f，总长度包含小数点。
+
+### 2.文件操作
+#### i.打开文件
+文件对象 = open(文件名, 访问模式, buffering)
+#### ii.关闭文件
+f.close()
+#### iii.读取内容
+str = f.read([b]);
+
+按行读取：
+list = f.readlines();
+str = readline();
+
+in关键字
+in关键字按行遍历：
+for line in f:
+#### iv.写入数据
+##### a.写入内容：f.write()
+##### b.写入序列：f.writelines(seq)
+#### v.文件指针
+##### a.指针位置：pos = f.tell()
+##### b.移动指针：f.seek(offset,where)
+#### vi.截断文件
+f.truncate([size]);丢弃后面内容。
+#### vii.文件属性
+fileStats = os.stat(文件路径和文件名)
+#### viii.shutil模块
+##### a.复制文件：shutil.copy(src, dst)
+##### b.移动文件：shutil.move(src, dst)
+#### ix.os模块
+##### a.删除文件：os.remove(src)
+##### b.重命名文件：os.rename(src, dst)
+
+### 3.目录编程
+os模块应用
+##### a.获取当前目录：os.getcwd()
+##### b.获取目录内容：os.listdir(path)
+##### c.创建目录：os.mkdir(path)
+##### d.删除目录：os.rmdir(path)
