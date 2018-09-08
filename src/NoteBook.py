@@ -3414,7 +3414,7 @@ class SinglelinkedList:
         temp = Node(item)
         temp.getNext(self._head)
         self._head = temp
-        
+
 
 if __name__ == "__main__":
     # c2 = Chapter2()
