@@ -3002,6 +3002,420 @@ class Chapter6():
         print '【6-30】删除..\\mydir的内容。'
         os.rmdir('..\\mydir')
 
+class Chapter8:
+    """
+    -** 8 **- Python数据结构
+    数据结构往往与高效的检索算法和索引技术有关。
+    知识点：
+        数据结构基础      栈
+        队列              链表
+        bitmap            图
+    """
+
+    """
+    8.1 Python数据结构概述
+        8.1.1 什么是数据结构
+        数据组织在一起的结构称为数据的结构，也叫做数据结构。
+        
+        Python的数据结构有很多类型。
+        定义好的称为Python的内置数据结构，如列表、元组、字典等。
+        需要我们自己定义的称为Python扩展数据结构，如栈、树等。
+        
+        8.1.2 数据结构和算法的关系
+        数据结构是数据的组织方式、储存方式，算法指运算方法。
+        数据结构是算法的基础，同一数据结构不同算法效率是不同的。
+    """
+
+    '''
+        8.2 栈
+            8.2.1 栈的工作原理
+            栈是一种经典的数据结构，属于扩展数据结构。
+            栈相当于一端开口、一端封闭的容器。支持进栈和出栈两种操作。
+            栈具有先进后出（LIFO）特性。
+
+    class Stack:
+        """模拟栈"""
+        """
+        8.2.2 利用Python列表实现栈的数据结构
+        介绍一个Python的自定义类stack，它的功能是利用Python列表实现栈的数据结构。
+            1.构造函数
+            在构造函数中定义一个列表items用于实现栈的容器。
+        """
+
+        def __init__(self):
+            self.items = []
+
+        """
+            2.isEmpty()函数
+            isEmpty()函数用于判断栈是否为空。是则返回True，否则返回False。
+
+        def isEmpty(self):
+            return len(self.items) == 0
+
+        """
+            3.push()函数
+            push()函数用于执行进栈操作。
+        """
+
+        def push(self, item):
+            self.items.append(item)
+
+        """
+            程序将item添加到栈（items）中。
+            4.pop()函数
+            pop()函数用于执行出栈操作。
+        """
+
+        def pop(self):
+            return self.items.pop()
+
+        """
+            列表对象的pop()函数用于返回列表中指定的元素，并删除该元素。默认情况下返回列表最后一个元素。
+            5.peek()函数
+            peek()函数用于返回栈顶元素，但不删除该元素。
+        """
+
+        def peek(self):
+            if not self.isEmpty():
+                return self.items[len(self.items) - 1]
+
+        """
+            6.size()函数
+            size()函数用于返回栈的大小。
+        """
+
+        def size(self):
+            return len(self.items)
+
+    print "【8-1】使用类stack的实例。"
+    s = Stack()         # 创建栈对象
+    print s.isEmpty()   # 打印栈是否为空
+    s.push('DataA')     # 进栈DataA
+    s.push('DataB')     # 进栈DataB
+    print s.peek()      # 打印栈顶元素
+    s.push('DataC')     # 进栈DataC
+    print s.size()      # 打印栈的大小
+    print s.isEmpty()   # 打印栈是否为空
+    s.push('DataD')     # 进栈DataD
+    print s.pop()       # 出栈
+    print s.pop()       # 出栈
+    print s.size()      # 打印栈的大小
+            '''
+
+    '''
+    8.3 队列
+        8.3.1 队列工作原理
+        队列是一种经典的数据结构，属于扩展数据结构。
+        队列相当于两边开口的容器，一端删除，一端插入。
+        队列中的数据是从队尾进队首出的。
+        
+        队列的数据元素又称为队列元素。
+        在队列中插入一个队列元素称为入队，删除一个队列元素称为出队。
+        
+        队列遵循先进先出（FIFO）原则。
+
+class Queue(object):
+    """模拟队列"""
+    """
+    8.3.2 利用Python列表实现队列的数据结构
+    介绍一个Python自定义类Queue，它的功能是利用Python列表实现队列的数据结构。
+        1.构造函数
+        在函数中定义一个列表queue用于实现队列的容器。
+    """
+    def __init__(self):
+        self.queue = []
+
+    """
+        2.isEmpty()函数
+        isEmpty()函数用于判断队列是否为空。是则返回True，否则返回False。
+    """
+
+    def isEmpty(self):
+        return self.queue == []
+
+    """
+        3.enqueue()函数
+        enqueue()函数用于执行入队操作。
+    """
+
+    def enqueue(self, item):
+        self.queue.append(item)
+
+    """
+        程序将参数item添加到队列（列表queue）中。
+        4.dequeue()函数
+        dequeue()函数用于执行出队操作。
+    """
+
+    def dequeue(self):
+        if self.queue != []:
+            return self.queue.pop(0)
+        else:
+            return None
+
+    """
+        程序调用列表对象的pop()函数，返回并删除第一个元素。
+        5.head()函数
+        head()函数用于返回队首元素，但并不删除该元素。
+    """
+
+    def head(self):
+        if self.queue != []:
+            return self.queue[0]
+        else:
+            return None
+
+    """
+        6.tail()函数
+        tail()函数用于返回队尾元素，但并不删除该元素。
+    """
+
+    def tail(self):
+        if self.queue != []:
+            return self.queue[-1]
+        else:
+            return None
+
+    """
+        7.length()函数
+        length()函数用于返回队列的大小。
+    """
+
+    def length(self):
+        return len(self.queue)
+
+print "【8-2】使用类Queue的实例。"
+q = Queue()             # 创建队列对象
+print q.isEmpty()       # 打印队列是否为空
+q.enqueue('DataA')      # 入队DataA
+q.enqueue('DataB')      # 入队DataB
+print q.head()          # 打印队首元素
+print q.tail()          # 打印队尾元素
+q.enqueue('DataC')      # 入队DataC
+print q.length()        # 打印队列的大小
+print q.isEmpty()       # 打印队列是否为空
+q.enqueue('DataD')      # 入队DataD
+print q.dequeue()       # 出队
+print q.dequeue()       # 出队
+print q.length()        # 打印队列的大小
+    '''
+
+    '''
+    8.4 树
+        8.4.1 树的工作原理
+        树是一种常用的数据结构，它比栈和队列稍微复杂一点。
+        树是一种非线性的数据结构，具有非常高的层次性。
+        利用树来储存数据，能够使用共有元素进行储存，很大程度上节约存储空间。
+        
+        树首先有且仅有一个根节点，另有N个不相交的的子集，每个子集都是一个子树。
+        
+        子节点数量＜=2的树是二叉树。
+        二叉树是有序树，要区分左子树和右子树。
+        二叉树的存储方式有两种，一种是顺序存储，一种是链式存储。
+        顺序存储采用一维数组的存储方式；链式存储采用链表的存储方式。后者包含数据域、左子链域和右子链域。
+        二叉树有5种，分别是空树、只有一个根节点的二叉树、只有左右子树的二叉树和完全二叉树。
+        
+        8.4.2 遍历二叉树
+        遍历是二叉树各种操作的基础。
+        遍历方法分为先序遍历、中序遍历和后续遍历。
+        
+        8.4.3 在Python程序中实现树的数据结构
+        介绍一个Python自定义类Binary Tree，它的功能是在Python程序中实现树的数据结构。
+
+class Node(object):
+    """树节点"""
+    """
+        1.定义树节点类Node
+        定义一个树节点类Node
+    """
+    def __init__(self, data = -1, lchild = None, rchild = None):
+        self.data = data
+        self.lchild = lchild
+        self.rchild = rchild
+
+    """
+        树节点类Node中定义了三个属性。
+        data表示树节点中存储的数据，lchild表示树节点的左子树，rchild表示树节点的右子树。
+    """
+
+class BinaryTree(object):
+    """二叉树"""
+
+    def __init__(self):
+        self.root = Node()
+
+    """
+        2.BinaryTree类的构造函数
+        root是Node对象，表示二叉树的根节点。
+        
+        3.BinaryTree类的add()函数
+        add()用于向二叉树中添加一个节点，该节点的数据为data。
+        如果二叉树为空，则将新节点作为二叉树的根节点，否则将该节点添加为左孩子节点或右孩子节点。
+    """
+
+    def add(self, data):                        # data为新节点的数据
+        node = Node(data)                       # 创建新节点
+
+        if self.isEmpty():                      # 如果二叉树为空，则将新节点作为二叉树的根节点
+            self.root = node
+
+        else:
+            tree_node = self.root
+            self.queue = []                     # 以列表存储二叉树
+            self.queue.append(self.root)
+
+            while self.queue:                   # 遍历二叉树
+                tree_node = self.queue.pop(0)
+                if tree_node.lchild == None:    # 左子节点为空，则将新节点作为左子节点
+                    tree_node.lchild = node
+                    return
+                elif tree_node.rchild == None:  # 右子节点为空，则将新节点作为右子节点
+                    tree_node.rchild = node
+                    return
+                else:
+                    self.queue.append(tree_node.lchild)
+                    self.queue.append(tree_node.rchild)
+
+    """
+        4.BinaryTree类的pre_order()函数
+        pre_order()函数用于执行先序遍历。
+    """
+
+    def pre_order(self, start):     # start是开始遍历的节点
+        node = start
+        if node == None:            # 如果当前节点为空，则返回
+            return
+
+        print node.data             # 打印当前节点的数据
+        # 如果当前左右子树都为空，则返回
+        if node.lchild == None and node.rchild == None:
+            return
+        self.pre_order(node.lchild) # 从当前节点的左子树开始先序遍历
+        self.pre_order(node.rchild) # 从当前节点的右子树开始先序遍历
+
+    """
+        5.BinaryTree类的in_order()函数
+        in_order()函数用于执行中序遍历。
+    """
+
+    def in_order(self, start):      # start是开始遍历的节点
+        node = start
+        if node == None:
+            return
+        self.in_order(node.lchild)  # 从当前节点的左子树开始中序遍历
+        print node.data             # 打印当前节点的数据
+        self.in_order(node.rchild)  # 从当前节点的右子树开始中序遍历
+
+    """
+        6.post_order()函数
+        post_order()函数用于执行后续遍历。
+    """
+
+    def post_order(self, start):    # start是开始遍历的节点
+        node = start
+        if node == None:
+            return
+        self.post_order(node.lchild) # 从当前节点的左子树开始后续遍历
+        self.post_order(node.rchild) # 从当前节点的右子树开始后续遍历
+        print node.data             # 打印当前节点的数据
+
+    """
+        7.isEmpty()函数
+        isEmpty()函数用于执行后序程序
+    """
+
+    def isEmpty(self):
+        return self.root.data == -1
+
+    """
+        8.length()函数
+        length()函数用于返回队列的大小。
+    """
+
+    def length(self):
+        return len(self.queue)
+
+print '【8-3】使用类BinaryTree的实例。'
+arr = []
+for i in range(10):
+    arr.append(i)
+print arr
+
+tree = BinaryTree()
+for i in arr:
+    tree.add(i)
+
+print 'pre_order:'
+tree.pre_order(tree.root)
+print '\nin_order:'
+tree.in_order(tree.root)
+print '\npost_order:'
+tree.post_order(tree.root)
+    '''
+
+    '''
+    8.5 链表
+        8.5.1 链表的工作原理
+        链表是一种非连续、非顺序的存储方式。
+        链表由一系列节点组成，每个节点包括两个部分，分别是数据域和只想像一个节点的指针域。
+        链表可以氛围单向链表、单向循环链表、双向链表、双向循环链表。
+        
+        单向链表的链接方向是单向的，只能单向遍历。
+        单向循环链表是表中最后一个节点的指针域指向头节点，整个链表形成一个环。
+        双向链表的每个数据节点中都有两个指针，分别指向直接后驱和直接前驱。
+        双向循环链表是双向链表和循环链表的结合。
+        
+        8.5.2 利用Python实现单向链表的数据结构
+        介绍在python中实现单向链表的数据结构的方法。
+    '''
+
+class Node:
+    __slots__ = ['_item', '_next']  # 限定Node实例的属性
+    def __init__(self, item):
+        self._item = item
+        self._next = None           # Node指针部分默认指向None
+    def getItem(self):
+        return self._item
+    def getNext(self):
+        return self._next
+    def setItem(self, newitem):
+        self._item = newitem
+    def setNext(self, newnext):
+        self._next = newnext
+
+    """
+        类Node有2个属性，item用于存储节点的数据，next用于存储指向下一个节点的指针。
+        2.类SinglelinkedList的初始函数
+        类LinglelinkedList用于实现单向链表。
+    """
+
+class SinglelinkedList:
+    def __init__(self):
+        self._head = None       # 初始化链表为空表
+        self._size = 0
+
+    """
+        _head属性指向链表头部，_size用于储存链表中节点的数量。
+        初始化链表为空表。
+        3.类SinglelinkedList的isEmpty()函数
+        isEmpty()函数用于检测链表是否为空。
+    """
+
+    def isEmpty(self):
+        return self._head == None
+
+    """
+        如果_head属性等于None，则返回True，否则返回False。
+        4.类SinglelinkedList的add()函数
+        add()函数用于在链表前段添加元素。
+    """
+
+    def add(self, item):
+        temp = Node(item)
+        temp.getNext(self._head)
+        self._head = temp
+        
+
 if __name__ == "__main__":
     # c2 = Chapter2()
     # c3 = Chapter3()
