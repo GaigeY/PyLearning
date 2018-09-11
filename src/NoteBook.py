@@ -3524,18 +3524,113 @@ class Chapter9:
         枚举系统进程          终止进程
         threading模块         线程的概念
     """
+
     """
     9.1 多进程编程
         9.1.1 进程的概念
         进程是正在运行的程序的实例。
+        每个进程至少包含一个线程，主线程结束，进程随之卸载。
+        程序由指令组成， 进程是指令的实际运行体。
+        进程组成部分：
+            与程序关联的可执行代码的映像。
+            内存空间，保存代码、进程数据、堆栈。
+            分配给进程资源的操作系统描述符和其他数据资源。
+            安全属性，如所有者和权限。
+            处理器状态，如寄存器内容、物理内存地址等。
+        操作系统在进程控制块（PCB）保存上述信息。
+        
+        9.1.2 进程的状态
+        进程有“被创建”（Created）、“就绪”（Ready）、“运行”（Runing）、“阻塞”（Blocked）、“挂起”（Suspend）、“终止”（Terminated）等状态。
+            进程被加载到内存中时，状态为“被创建”；
+            进程创建后状态自动设置为“就绪”，处理器空闲时进程被加载，状态变成“运行”；
+            进程需要某资源时，标记为“阻塞”，得到资源后变回“就绪”；
+            所有进程处于“阻塞”时，Windows将一个进程设置为“挂起”，保存数据并释放内存；
+            进程执行完成或被操作系统终止，会被从内存移除或被设置为“终止”。
     """
+
+    """
+    9.2 进程编程
+    创建进程、结束进程、获取进程信息等。
+    """
+
+    def Example9_2_1(self):
+        """
+        9.2.1 创建进程
+        """
+        import subprocess
+
+        """
+        引用subprocess模块管理进程：
+            import subprocess
+        1.subprocess.call()函数
+        调用subprocess.call()创建进程：
+            trtcode = subprocess.call(可执行程序)
+        trtcode返回可执行程序的退出信息。
+        
+        通过元组的形式指定运行程序的参数：
+            trtcode = subprocess.call([可执行程序,参数])
+        """
+
+        print "【9-1】subprocess.call()方法运行记事本。"
+        retcode = subprocess.call("notepad.exe")
+        print retcode
+
+        print "【9-2】subprocess.call()方法运行记事本，同时指定打开的文件。"
+        retcode = subprocess.call(["notepad.exe", "..\\data\\test.txt"])
+        print retcode
+
+        """
+        2.subprocess.Popen()函数
+        subprocess.Popen()可用于创建进程执行系统命令，但它有更多的选项。函数原型：
+            进程对象 = subprocess.Popen(args, bufsize=0, executable=None, stdin=None, stdout=None,
+             stderr=None, preexec_fn=None, close_fds=False, shell=False, cwd=None, env=None, universal_
+             newlines=False, startupinfo=None, creationflags=0)
+        说明如下：
+            args:               字符串或者序列，指定进程的可执行文件及其参数。
+            bufsize:            缓冲区大小。
+            executable:         指定可执行程序，前提shell为True。
+            stdin:              指定程序的标准输入，默认键盘。
+            stdout:             指定程序的标准输出，默认屏幕。
+            stderr:             指定程序的标准输错，默认屏幕。
+            preexec_fn:         Unix平台，指定可执行对象。
+            close_fds:          Windows平台，True则子进程不继承父进程的输入输出和错误管道。
+            shell:              True则程序通过shell执行。
+            cwd:                指定进程当前目录。
+            env:                指定进程环境变量。
+            universal_newlines: 指定是否使用统一文本换行符。
+            startupinfo & creationflags:    Windows平台，传递给底层CreatProcess()函数，设置进程属性，如外观和优先级等。
+        """
+
+        print "【9-3】调用subprocess.Popen()函数运行dir命令，列出当前目录下的文件。"
+        print "请另打开文件：9-3.py"
+
+        """
+        p.wait()用于等待进程结束。需要在命令行窗口中使用python命令运行。
+        """
+
+        print "【9-4】使用wait()函数实现休眠10秒。"
+        import datetime
+        print datetime.datetime.now()
+        p = subprocess.Popen("ping localhost > nul",shell=True)
+        print "执行中..."
+        p.wait()
+        print datetime.datetime.now()
+
+        """
+        ping lacalhost > nul命令用于ping本机，目的在于拖延时间。
+        p.wait()函数等到ping命令结束后才返回。
+        
+        3.CreatProcess函数
+        """
+
 
 if __name__ == "__main__":
     # c2 = Chapter2()
     # c3 = Chapter3()
     # c4 = Chapter4()
     # c5 = Chapter5()
-    c6 = Chapter6()
+    # c6 = Chapter6()
+    c9 = Chapter9()
     # c2.Example2_1_1()
     # c2.Example2_1_2()
     # c2.Example2_1_3()
@@ -3568,3 +3663,4 @@ if __name__ == "__main__":
     # c6.Example6_2_10()
     # c6.Example6_2_11()
     # c6.Example6_3()
+    c9.Example9_2_1()
