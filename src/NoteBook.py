@@ -3367,7 +3367,6 @@ tree.post_order(tree.root)
         
         8.5.2 利用Python实现单向链表的数据结构
         介绍在python中实现单向链表的数据结构的方法。
-    '''
 
 class Node:
     __slots__ = ['_item', '_next']  # 限定Node实例的属性
@@ -3415,6 +3414,121 @@ class SinglelinkedList:
         temp.getNext(self._head)
         self._head = temp
 
+    """
+        程序首先创建一个节点temp，将temp节点的next属性指向当前链表的头部，将当前链表的头部指向temp节点。
+        5.类SinglelinkedList的append()函数
+        append()函数用于在链表尾部添加元素。
+    """
+
+    def append(self, item):
+        temp = Node(item)
+        if self.isEmpty():
+            self._head = temp               # 空表则将添加的元素设为第一个元素
+        else:
+            current = self._head
+            while current.getNext() != None:
+                current = current.getNext() # 遍历链表
+            current.setNext(temp)           # 此时current为链表最后的元素
+
+    """
+        如果当前链表为空表，则将添加的元素设为第一个元素；否则遍历链表，将新节点添加在尾部。
+        6.类SinglelinkedList的index()函数
+        用于返回指定元素在链表中的位置。
+    """
+
+    def index(self, item):
+        current = self._head
+        count = 0
+        found = None
+        while current != None and not found:
+            count += 1
+            if current.getItem() == item:
+                found = True
+            else:
+                current = current.getNext()
+        if found:
+            return count
+        else:
+            raise ValueError,'%s is not in linkedlist.' % item
+
+    """
+        7.类SinglelinkedList的remove()函数
+        用于删除链表的指定元素。
+    """
+
+    def remove(self, item):
+        current = self._head
+        pre = None
+        while current != None:
+            if current.getItem != item:
+                if not pre:
+                    self._head = current.getNext()
+                else:
+                    pre.setNext(current.getNext())
+                break
+            else:
+                pre = current
+                current = current.getNext()
+
+    """
+        8.类SinglelinkedList的insert()函数
+        用于在链表中插入元素。
+    """
+
+    def insert(self, pos, item):
+        if pos <= 1:
+            self.add(item)
+        elif pos > self._size:
+            self.append(item)
+        else:
+            temp = Node(item)
+            count = 1
+            pre = None
+            current = self._head
+            while count < pos:
+                count += 1
+                pre = current
+                current = current.getNext()
+            pre.setNext(temp)
+            temp.setNext(current)
+
+    def travel(self):
+        current = self._head
+        if current == None:
+            return
+        print current.getItem()
+        while current.getNext() != None:
+            current = current.getNext()
+            print current.getItem()
+
+print "【8-4】使用类SinglelinkedList的实例。"
+a = SinglelinkedList()      # 定义单向链表对象a
+for i in range(1, 10):      # 单向链表对象a中添加10个元素
+    a.append(i)
+print a._size               # 打印单向链表的大小
+a.travel()                  # 遍历链表
+print a.index(5)            # 打印位置5的元素
+a.remove(4)                 # 移除位置4的元素
+a.travel()                  # 遍历链表
+a.insert(4,100)             # 在位置4插入元素100
+a.travel()                  # 遍历链表
+    '''
+
+class Chapter9:
+    """
+    -** 9 **- 多任务编程
+    多线程编程通常指用户可以在同一时间内运行多个应用程序，也指一个应用程序可以在同一时间内运行多个任务。
+    多任务编程是影响应用程序性能的重要因素。
+    知识要点：
+        进程的概念            创建进程
+        枚举系统进程          终止进程
+        threading模块         线程的概念
+    """
+    """
+    9.1 多进程编程
+        9.1.1 进程的概念
+        进程是正在运行的程序的实例。
+    """
 
 if __name__ == "__main__":
     # c2 = Chapter2()
