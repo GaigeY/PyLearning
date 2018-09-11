@@ -1,7 +1,7 @@
 # 知识手册
 这是学习过程中整理的笔记，用于复习和索引。
 
-概念解释和具体代码详见Notebook.py。
+概念解释和具体代码详见[NoteBook.py](src\NoteBook.py)。
 
 ## Chapter2 Python语言基础
 ### 1.常量和变量
