@@ -1,7 +1,7 @@
 # 知识手册
 这是学习过程中整理的笔记，用于复习和索引。
 
-概念解释和具体代码详见[NoteBook.py](src/NoteBook.py)。
+概念解释和具体代码详见[NoteBook](src/NoteBook.py)。
 
 ## Chapter2 Python语言基础
 ### 1.常量和变量
@@ -351,3 +351,47 @@ Python拓展数据结构：栈、队列、树、链表等。
 ##### g.遍历链表：travel()
 
 ## Chapter9 多任务编程
+### 1.多进程编程
+进程的概念：指令的实际运行体。
+
+进程的状态：被创建、就绪、运行、阻塞、挂起、终止。
+### 2.进程编程
+创建进程的模块：subprocess, win32process, ctypes。
+#### i.subprocess模块
+##### a.运行进程：subprocess.call([可执行程序, 参数])
+##### b.创建进程执行命令：subprocess.Popen()
+#### ii.win32process模块
+##### a.创建进程：win32process.CreatProcess()
+#### iii.kernel32
+创建对象：kernel32 = windll.kernel32
+##### a.枚举进程：kernel32.CreatToolhelp32Snapshot()
+##### b.首个进程：kernel32.Process32First(hSnapshot, byref(fProcessEntry32))
+##### c.下个进程：kernel32.Process32Next(hSnapshot, byref(fProcessEntry32))
+### 3.线程编程
+线程是进程的子集，进程内部线程资源共享。
+
+线程的状态：初始化、就绪、延迟就绪、备用、运行、等待、过渡、终止。
+#### 关键：threading模块！
+##### i.创建线程：t = threading.Thread()
+##### ii.守护线程：t.setDaemon()
+##### iii.阻塞线程：t.join()
+##### iv.指令锁
+###### a.创建指令锁：lock = threading.Lock()
+###### b.申请指令锁：lock.acquire([timeout])
+###### c.释放指令锁：lock.release()
+##### v.可重入锁
+###### a.创建可重入锁：lock = threading.RLock()
+###### b.申请可重入锁：lock.acquire()
+###### c.释放可重入锁：lock.release()
+##### vi.信号量
+###### a.创建信号量：s = threading.Semaphore(value)
+###### b.申请信号量：s.acquire()
+###### c.释放信号量：s.release()
+##### vii.事件
+###### a.创建事件：e = threading.Event()
+###### b.标记True：e.set()
+###### c.标记False：e.clear()
+###### d.标记阻塞：e.wait()
+##### viii.定时器（Thread的派生类）
+###### a.创建定时器：timer = threading.Timer(t,f)
+###### b.启动定时器：timer.start()

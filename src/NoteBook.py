@@ -3621,8 +3621,405 @@ class Chapter9:
         p.wait()函数等到ping命令结束后才返回。
         
         3.CreatProcess函数
+        可以使用win32process模块中的CreatProcess()函数创建进程：
+            CreatProcess(appName, commandLine, processAttributes, threadAttributes, bInheritHandles, dwCreationFlags, newEnviroment, currentDiretory, startupinfo)
+        说明如下：
+            appName             要执行的应用程序名，可包括绝对路径和文件名，通常可为NULL。
+            commandLine         要执行的命令行。
+            processAttributes   新进程安全属性，None为默认安全属性。
+            ThreadAttributes    线程安全属性，None为默认安全属性。
+            bInheritHandles     继承属性，None为默认继承属性。
+            dwCreationFlags     指定附加的、控制优先类和进程创建的标志。
+            newEnviroment       指向新进程的环境块，NULL则调用CreatProcess()的环境。
+            currentDirectory    进程的当前目录。
+            startupinfo         指定新进程的主窗口特性。
         """
 
+        print "【9-5】调用CreatProcess()函数运行Windows记事本程序。"
+        '''
+        import win32process
+        handle = win32process.CreatProcess('C:\Windows\\notepad.exe','', None, None, 0, win32process.CREATE_NO_WINDOW, None, None, win32process.STARTUPINFO())
+        '''
+        # 运行本实例之前，需要下载安装Python32扩展库
+
+    def Example9_2_2(self):
+        """
+        9.2.2 枚举系统进程
+        """
+        """
+        有些应用程序需要任务管理器一样枚举当前系统正在运行的进程信息。
+        1.CreatToolhelp32napshot()函数
+            调用Windows API CreatToolhelp32Snapshot()可获取当前系统运行进程的快照（Snapshot），即进程列表。
+            包含进程标示符及其对应的可执行文件等信息。
+                HANDLE WINAPI CreatToolhelp32Snapshot(
+                    DWORD dwFlags,      //指定快照包含对象
+                    DWORD th32ProcessID //指定获取进程快照的PID，0则获取当前系统进程列表。
+                )
+            函数执行成功则返回进程快照的句柄，否则返回INVALI_HANDLE_VALUE。
+            参数dwFlags取值：
+                TH32CS_SNAPALL      (15,0x0000000F) 相当于指定了TH32CS_SNAPLIST,TH32CS_SNAPMODULE,TH32CS_SNAPPROCESS,TH32CS_SNAPTHREAD
+                TH32CS_SNAPHEAPLIST ( 1,0x00000001) 快照中包含指定进程的堆列表
+                TH32CS_SNAPMODULE   ( 8,0x00000008) 快照中包含指定进程的模块列表
+                TH32CS_SNAPPROCESS  ( 2,0x00000002) 快照中包含进程列表
+                TH32CS_SNAPTHREAD   ( 4,0x00000004) 快照中包含线程列表
+            
+            Python的ctype库赋予了Python类似C语言一样的底层操作能力，导入ctype模块后即可调用CreatToolhelp32Snapshot()函数：
+                from ctypes.wintypes import *
+                from ctypes import *
+            调用CreatToolhelp32Snapshot()函数：
+                kernel32 = windll.kernel32
+                hSnapshot = kernel32.CreatToolhelp32Snapshot(15, 0)
+            
+        2.Process32First()函数
+            调用Process32First()函数可从进程快照中获取第一个进程的信息：
+                BOOL WINAPI Process32First(
+                    HANDLE hSnapshot,       //之前调用CreatToolhelp32Snapshot()函数得到的快照句柄
+                    LPPROCESSENTRY32 lppe   //包含进程信息的结构体
+                )
+            执行成功则返回TRUE，否则返回FALSE。
+            结构体LPPROCESSENTRY32的定义：
+                typedef struct tagPROCESSENTRY32{
+                    DWORD dwSize;               //结构体的长度，单位是字节
+                    DWORD cntUsage;             //引用进程的数量，必须为1
+                    DWORD th32ProcessID;        //进程标示符（PID）
+                    DWORD th32DefaultHeapID;    //进程的默认堆标识符
+                    DWORD th32ModuleID;         //进程的模块标识符
+                    DWORD cntThreads;           //进程中运行的线程数量
+                    DWORD th32ParentProcessID;  //创建进程的父进程的标识符
+                    LONG pcPriClassBase;        //进程创建的线程的优先级
+                    DWORD dwFlags;              //未使用
+                    TCHAR szExeFile[MAX_PATH];  //进程对应的可执行文件名
+                    DWORD th32MemoryBase;       //可执行文件的加载地址
+                    DWORD th32AccessKey;        //位数组，每一位指定进程对地址的查看权限
+                } PROCESSENTRY32;
+            为了在Python中获取进程信息，需要定义结构体tagPROCESSENTRY32：
+                class tagPROCESSENTRY32(Structure):
+                    _fields_ = [('dwSize',              DWORD),
+                                ('cntUsage',            DWORD),
+                                ('th32ProcessID',       DWORD),
+                                ('th32DefaultHeapID',   POINTER(ULONG)),
+                                ('th32ModuleID',        DWORD),
+                                ('cntThreads',          DWORD),
+                                ('th32ParentProcessID', DWORD),
+                                ('pcPriClassBase',      LONG),
+                                ('dwFlags',             DWORD),
+                                ('szExeFile',           c_char * 260)]
+            在Python中调用Process32First()函数的代码：
+                kernel32 = windll.kernel32
+                fProcessEntry32 = tagPROCESSENTRY32()
+                fProcessEntry32.dwSize = sizeof(fProcessEntry32)
+                listloop = kernel32.Process32First(hSnapshot, byref(fProcessEntry32))
+            参数hSnapshot是之前调用CreatToolhelp32Snapshot()函数返回的进程快照句柄。
+            获取的信息被储存在fProcessEntry32里。
+        3.Process32Next()函数
+            调用Process32Next()函数可从进程快照中获取下一个进程的信息：
+                BOOL WINAPI Process32Next(
+                    HANDLE hSnapshot,       //之前调用CreatToolhelp32Snapshot()函数得到的进程快照句柄
+                    LPPROCESSENTRY32 lppe   //包含进程信息的结构体
+                )
+            函数执行成功则返回TRUE，否则返回FALSE。
+            Python中调用Process32Next()函数的代码：
+                kernel32 = windll.kernel32
+                fProcessEntry32 = tagPROCESSENTRY32()
+                fProcessEntry32.dwSize = sizeof(fProcessEntry32)
+                    listloop = kernel32.Process32Next(hSnapshot, byref(fProcessEntry32))
+            参数hSnapshot是之前调用CreatToolhelp32Snapshot()函数返回的进程快照句柄。
+            获取的信息储存在fProcessEntry32里。
+        
+print '【9-6】利用进程快照枚举当前Windows运行进程的信息。'
+from ctypes.wintypes import *
+from ctypes import *
+
+kernel32 = windll.kernel32
+# 定义进程信息结构体
+class tagPROCESSENTRY32(Structure):
+    _fields_ = [('dwSize',              DWORD),
+        ('cntUsage',            DWORD),
+        ('th32ProcessID',       DWORD),
+        ('th32DefaultHeapID',   POINTER(ULONG)),
+        ('th32ModuleID',        DWORD),
+        ('cntThreads',          DWORD),
+        ('th32ParentProcessID', DWORD),
+        ('pcPriClassBase',      LONG),
+        ('dwFlags',             DWORD),
+        ('szExeFile',           c_char * 260)]
+# 获取当前系统运行进程的快照
+hSnapshot = kernel32.CreatToolhelp32Snapshot(15, 0)
+fProcessEntry32 = tagPROCESSENTRY32()
+# 初始化进程信息结构体的大小
+fProcessEntry32.dwSize = sizeof(fProcessEntry32)
+# 获取第一个进程信息
+listloop = kernel32.Process32First(hSnapshot, byref(fProcessEntry32))
+while listloop: # 如果获取进程信息成功，则继续
+    processName = (fProcessEntry32.szExeFile)
+    processID = fProcessEntry32.th32ProcessID
+    print "%d:%s" % (processID, processName)
+    # 获取下一个进程信息
+    listloop = kernel32.Process32Next(hSnapshot, byref(fProcessEntry32))
+"""
+        # 注意：kernel32中找不到目标函数！
+
+    """
+    9.3 多线程编程
+    多线程编程可提高应用程序的并发性和处理速度，使后台计算不影响前台界面与用户的交互。
+    
+        9.3.1 线程的概念
+        学习编程时，通常是从变现顺序程序开始的。
+        运行时的任意时刻，程序中只有一个点被执行。
+    
+        线程是操作系统可以调度的最小执行单位，通常将程序拆分成2个或多个并发运行的任务。
+        一个线程就是一段程序，但不能独立运行，只能在程序中运行。
+    
+        不同操作系统实现进程和线程的方法不同，大多数是在进程中包含线程，譬如Windows。
+        多处理器或多核系统中，线程才是真正的同时运行，每个处理器或内核运行一个线程。
+    
+        线程和进程的对比：
+            进程通常可以独立运行，而线程则是进程的子集，只能在进程运行的基础上运行。
+            进程拥有独立的私有内存空间，一个进程不能访问其他进程的内存空间；一个进程内部的线程可以共享内存空间。
+    
+        线程可被标记的状态：
+            初始化  （Init）          
+            就绪    （Ready）         
+            延迟就绪（Deferred Ready）
+            备用    （Standby）       
+            运行    （Running）       
+            等待    （Waiting）       
+            过渡    （Transition）    
+            终止    （Terminated）    
+    
+        每个线程必须拥有一个进入点函数，线程从这个点开始运行。
+        希望在进程中创建一个线程，必须为该线程指定一个进入点函数，这个函数也成为线程函数。
+    """
+
+    def Example9_3_2(self):
+        """
+        9.3.2 threading模块
+        """
+        import threading
+        import time
+
+        """
+        引用threading模块管理线程。导入方法：
+            import threading
+        
+        1.创建和运行线程
+        用模块中的Thread类管理线程：
+            线程对象 = threading.Thread(target = 线程函数, args = (参数列表), name = 线程名, group = 线程组)
+        线程名和线程组都可忽略。
+        
+        创建线程后，通常需线程对象的setDaemon()方法将线程设置为守护线程。
+        主线程执行完后，如还有其它非守护线程，则主线程不会退出，而是无限挂起；必须将线程声明为守护线程后，队列中线程运行完成，则整个程序不用等待，即可退出。
+            线程对象.setDaemon(是否设置为守护线程)
+        setDaemon()函数必须在运行线程前被调用。
+        调用线程对象的start()方法可运行线程。
+        """
+        '''
+        print '【9-7】线程编程的例子。'
+        def f(i):
+            print "I am from a thread, num = %d" % (i)
+
+        for i in range(1, 10):
+            t = threading.Thread(target=f,args=(i,))
+            t.setDaemon(True)
+            t.start()
+        '''
+        """
+        线程是并发运行的，那个线程先执行完全不确定。
+        >>>说明主程序已退出。
+        
+        2.阻塞进程
+        调用线程对象的join()可阻塞进程直到线程执行完毕：
+            join(timeout=None)
+        参数timeout指定超时时间（s），超过指定时间join则不再阻塞进程。
+        """
+        '''
+        print '【9-8】使用join()方法直至线程执行完毕的实例。'
+        for i in range(1, 10):
+            t = threading.Thread(target=f,args=(i,))
+            t.setDaemon(True)
+            t.start()
+        t.join()
+        '''
+        """
+        3.指令锁
+        多个线程同时访问同一资源（如全局变量）时，可能会出现访问冲突。
+
+print '【9-9】多个线程同时访问同一全局变量时出现访问冲突的实例。'
+import threading
+import time
+num = 0
+def f():
+            global num
+            b = num
+            time.sleep(0.0001)
+            for i in range(1,100):
+                num = b + 1
+            print '%s \n' % threading.currentThread().getName()
+
+for i in range(1, 20):
+            t = threading.Thread(target=f)
+            t.setDaemon(True)
+            t.start()
+
+t.join()
+print num
+"""
+        """
+        线程是并发的，有的线程休眠时，其他线程可能已经改了全局变量num的值。
+        
+        使用锁限制线程同时访问同一资源。
+        指令锁（Lock）是可用的最低级的同步指令。
+        指令锁处于锁定状态时，不能被特定的线程所拥有。线程申请一个处于锁定状态的锁时线程会被阻塞，直至该锁被释放。
+        访问全局变量之前申请一个指令锁，访问之后释放指令锁，这样可避免多个线程同时访问全局变量。
+        
+        使用threading.Lock()方法创建指令锁：
+            lock = threading.Lock()
+        使用指令锁对象的acquire()方法申请指令锁：
+            acquire([timeout])
+        timeout是可选参数，用于指定锁定时间。
+        
+        使用指令锁对象的release()方法可以释放指令锁。
+        """
+        '''
+print '【9-10】改进[9-9]，使用指令锁避免多线程同时访问变量。'
+import threading
+import time
+lock = threading.Lock() # 创建一个指令锁
+num = 0
+def f():
+    global num
+    if lock.acquire():
+        print '%s获得指令锁.' % threading.currentThread().getName()
+        b = num
+        time.sleep(0.0001)
+        num = b + 1
+        lock.release()  # 释放指令锁
+        print '%s释放指令锁.' % threading.currentThread().getName()
+    print '%s \n' % threading.currentThread().getName()
+
+for i in range(1,20):
+    t = threading.Thread(target=f)
+    t.setDaemon(True)
+    t.start()
+
+t.join()
+print num
+        '''
+        """
+        4.可重入锁
+        使用指令锁可以避免多个线程同时访问全局变量。
+        然而，如果线程内部有递归函数，则它可能会多次请求访问全局变量，也会被阻塞。
+        
+        可使用可重入锁（RLock）。
+        每个可重入锁都关联一个请求计数器和一个占有它的线程。
+        计数器为0时，这个所可被一个线程请求得到，并把计数器加一。再次请求，计数器就会增加。
+        线程释放RLock时，计数器减一。计数器为0时，锁被释放。
+        
+print '【9-11】使用可重入锁的实例。'
+import threading
+import time
+lock = threading.RLock()    # 创建一个可重入锁
+num = 0
+def f():
+    global num
+    # 第一次请求锁定
+    if lock.acquire():
+        print '%s获得可重入锁.\n' % threading.currentThread().getName()
+        time.sleep(0.0001)
+        # 第二次请求锁定
+        if lock.acquire():
+            print '%s获得可重入锁.\n' % threading.currentThread().getName()
+            time.sleep(0.0001)
+            lock.release()  # 释放指令锁
+            print '%s释放指令锁.\n' % threading.currentThread().getName()
+        time.sleep(0.0001)
+        print '%s释放指令锁.\n' % threading.currentThread().getName()
+        lock.release()  # 释放指令锁
+
+for i in range(1,20):
+    t = threading.Thread(target=f)
+    t.setDaemon(True)
+    t.start()
+
+t.join()
+print num
+        """
+        """
+        5.信号量
+        信号量（Semaphore）也称信号灯，是在多线程环境下使用的一种机制，用于保证两个或多个关键代码段不被并发调用。
+        进入一段关键代码前，线程必须获取一个信号量，完成释放。
+        信号量内置计数器，调用acquire()方法时计数器-1，调用release()方法计数器+1。
+        计数器不小于0；为0时将阻塞线程至同步锁定状态，直到其他线程调用release()。
+        信号量用于同步一些有“访客上限”的对象，比如连接池。
+        
+        创建信号量对象：
+            信号量对象 = threading.Semaphore(计数器初值)
+        使用acquire()方法申请信号量，使用release()方法释放信号量，具体方法和指令锁类似。
+
+print '【9-12】使用信号量的实例。'
+import threading
+import time
+s = threading.Semaphore(2)  # 创建一个计数器初值为2的信号对象s
+num = 0
+def f():
+    global num
+    # 第一次请求锁定
+    if s.acquire():
+        print '%s获得信号量.\n' % threading.currentThread().getName()
+        time.sleep(0.001)
+        print '%s释放信号量.\n' % threading.currentThread().getName()
+        s.release() # 释放指令锁
+
+for i in range(1,10):
+    t = threading.Thread(target=f)
+    t.setDaemon(True)
+    t.start()
+
+t.join()
+        """
+        """
+        6.事件
+        事件是线程通信的一种机制，一个线程通知事件，其他线程等待事件。
+        事件对象内置一个标记（初始值为False），在线程中根据时间对象的标记决定是继续运行还是阻塞。
+            set()   将内置标记设置为True；
+            clear() 将内置标记设置为False；
+            wait()  阻塞进程至时间对象的标记被设置为True。
+
+print '【9-13】使用事件的实例。'
+import threading
+import time
+e = threading.Event()   # 创建一个事件对象e
+def f1():
+    print '%s start.\n' % threading.currentThread().getName()
+    # time.sleep(5)
+    print '触发事件.\n'
+    e.set()
+
+def f2():
+    e.wait()
+    print '%s start.\n' % threading.currentThread().getName()
+
+t1 = threading.Thread(target=f1)
+t1.setDaemon(True)
+t1.start()
+t2 = threading.Thread(target=f2)
+t2.setDaemon(True)
+t2.start()
+        """
+        """
+        7.定时器
+        定时器（Timer）是Thread的派生类，用于在指定时间后调用函数：
+            timer = threading.Timer(指定时间t, 函数f)
+            timer.start()
+        执行tier.start()后，程序会在指定时间t后启动线程执行函数f。
+        """
+
+        print '【9-14】使用Timer的实例。'
+        def func():
+            print time.ctime()
+        print time.ctime()
+        timer = threading.Timer(1,func)
+        timer.start()
 
 if __name__ == "__main__":
     # c2 = Chapter2()
@@ -3663,4 +4060,6 @@ if __name__ == "__main__":
     # c6.Example6_2_10()
     # c6.Example6_2_11()
     # c6.Example6_3()
-    c9.Example9_2_1()
+    # c9.Example9_2_1()
+    # c9.Example9_2_2()
+    c9.Example9_3_2()
