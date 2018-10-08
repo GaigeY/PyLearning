@@ -3991,7 +3991,7 @@ import time
 e = threading.Event()   # 创建一个事件对象e
 def f1():
     print '%s start.\n' % threading.currentThread().getName()
-    # time.sleep(5)
+    time.sleep(0.05)
     print '触发事件.\n'
     e.set()
 
@@ -4005,6 +4005,7 @@ t1.start()
 t2 = threading.Thread(target=f2)
 t2.setDaemon(True)
 t2.start()
+time.sleep(5)
         """
         """
         7.定时器
@@ -4012,7 +4013,6 @@ t2.start()
             timer = threading.Timer(指定时间t, 函数f)
             timer.start()
         执行tier.start()后，程序会在指定时间t后启动线程执行函数f。
-        """
 
         print '【9-14】使用Timer的实例。'
         def func():
@@ -4020,6 +4020,7 @@ t2.start()
         print time.ctime()
         timer = threading.Timer(1,func)
         timer.start()
+        """
 
 if __name__ == "__main__":
     # c2 = Chapter2()
