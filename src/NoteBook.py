@@ -4022,13 +4022,323 @@ time.sleep(5)
         timer.start()
         """
 
+class Chapter10:
+    """
+    -** 10 **- Python网络编程
+    知识要点：
+        OSI参考模型         TCP/IP协议簇体系结构
+        Socket              基于TCP的Socket编程
+        基于UDP的Socket编程
+    """
+
+    """
+    10.1 网络通信模型和TCP/IP协议簇
+    为了推动Internet的发展和普及，标准化组织制定了各种网络模型和标准协议。
+    本节介绍通用的OSI参考模型和TCP/IP层次模型。
+    了解网络模型和通信协议的基本工作原理，是管理和配置网络、开发网络应用程序的基础。
+        10.1.1 OSI参考模型
+        ISO（International Organization for Standardization，国际标准化组织）制定了“开放系统互联参考模型”，简称OSI参考模型（Open System Interconnection Reference Model）
+        
+        OSI参考模型把网络通信的工作划为7层，由低到高分别为物理层(Pysical Layer)、数据链路层(Data Link Layer)、
+        网络层(Network Layer)、传输层(Transport Layer)、会话层(Session Layer)、表示层(Presentation Layer)和应用层(Application Layer)。
+        
+        物理层、数据链路层和网络层属于低3层，负责创建网络通信连接的链路；其他4层负责端到端的数据通信。
+        每一层都完成特定的功能，为其上层提供服务。
+        
+        网络通信中，发送段自上而下地使用OSI参考模型，对信息逐层打包，直至在物理层发送到网络中。
+        接受段自下而上地使用OSI参考模型，将数据逐层解析，最后将得到的数据传送给应用程序。
+        
+        同一网段的二层交换机之间通信只需经过数据链路层和物理层，路由器之间的连接只需网络层、数据链路层和物理层。
+        封装数据，每一层都会为数据包加上一个头部；解封数据逐层解析头部。
+        双方通信必须在对等层次上进行。
+        
+        OSI参考模型中，对等层协议之间交换的信息单元称为协议数据单元（PDU）。
+        传输层及其下面隔层PDU有各自的名称。
+            OSI参考模型中的层次     PDU的特定名称
+            传输层                  数据段（Segment）
+            网络层                  数据包（Packet）
+            数据链路层              数据帧（Frame）
+            物理层                  比特（Bit）
+        
+        10.1.2 TCP/IP协议簇体系结构
+        TCP/IP是Internet的基础网络通信协议，规范了网络上所有网络设备之间数据往来的格式和传送方式。
+        TCP和IP是两个独立的协议，它们负责网络中数据的传输。
+        TCP位于OSI参考模型的传输层，IP处于网络层。
+        
+        TCP/IP中包含一组通信协议，因此被称为协议簇。TCP/IP协议簇中包含网络接口层、网络层、传输层和应用层。
+        TCP/IP协议簇和OSI参考模型间的对应关系：
+            OSI参考模型     TCP/IP协议簇
+            应用层             应用层
+            表示层             应用层
+            会话层             应用层
+            传输层             传输层
+            网络层             网络层
+            数据链路层         网络接口层
+            物理层             未定义
+        
+            1.网络接口层
+            TCP/IP参考模型中，网络接口层位于最底层。
+            网络接口层负责通过网路发送和接收IP数据包。
+            网络接口层包括各种物理网络协议，包括局域网的Ethernet（以太网）协议、Token Ring（令牌环）协议、分组交换网的X.25协议等。
+            
+            2.网络层
+            TCP/IP参考模型中，网络层位于第二层。
+            网络层负责将主机的报文分组发送到目的主机。源主机和目的主机可以在同一网段中，也可在不同的网段中。
+            网络层包括以下4个核心协议：
+                IP（Internet Protocol，网际协议）：对数据包进行寻址和路由，把数据从一个网络发到另一个网络；
+                ICMP（Internet Control Messge Protocol，网际控制报文协议）：用于在IP主机和路由器之间传递控制消息；
+                ARP（Address Resolution Protocol，地址解析协议）：可以通过IP地址得知其物理地址（Mac地址）的协议；
+                RARP（Revers Address Resolution Protocol，逆向地址解析协议）：用于完成物理地址向IP地址的转换。
+            
+            3.传输层
+            TCP/IP参考模型中，传输层位于第三层。
+            传输层负责应用程序之间实现端到端的通信。
+            传输层中定义了以下2种协议：
+                TCP：一种可靠的面向连接的协议，允许将一台主机的字节流无差错地传送到目的主机。
+                    TCP协议同时要完成流量控制功能、协调收发双方的发送与接收速度，达到正确传输的目的。
+                UDP：一种不可靠的无连接协议。
+                    UDP协议更简单，传输速率也较高。
+            
+            4.应用层
+            TCP/IP参考模型中，应用层位于最高层，包括了所有与网络相关的高层协议。
+            常用的应用层协议有：
+                Telnet（Teletype Network，网络终端协议）：用于实现网络中的远程登陆功能；
+                FTP（File Transfer Protocol，文件传输协议）：用于实现网络中的交互式文件传输功能；
+                SMTP（Simple Mail Transfer Protocol，简单邮件传输协议）：用于实现网络中的电子邮件传送功能；
+                DNS（Domain Name System，域名系统）：用于实现网络设备名称到IP地址的映射；
+                SNMP（Simple Network Management Protocol，简单网络管理协议）：用于管理与监视网络设备；
+                RIP（Routing Information Protocol，路由信息协议）：用于在网络设备之间交换路由信息；
+                NFS（Network File System，网络文件系统）：用于网络中不同主机之间的文件共享；
+                HTTP（Hyper Text Transfer Protocol，超文本传输协议）：互联网上应用最为广泛的一种传输协议。
+    """
+
+    """
+    10.2 Socket编程
+    TCP/IP网络环境中，可用Socket接口建立网络连接、实现主机之间的数据传输。
+    本节介绍使用Socket接口编写网络应用程序的基本方法。
+        10.2.1 Socket工作原理和基本概念
+        Socket的中文翻译是“套接字”，是TCP/IP网络环境下应用程序与底层信息驱动程序之间运行的开发借口。
+        可将应用程序与具体的TCP/IP隔离开来，使应用程序不需要了解TCP/IP的具体细节，就能够实现数据传输。
+        
+        在网络应用程序中，Socket通信是基于客户端/服务器结构的。
+        客户端是发送数据的一方，服务器时刻准备着接收来自客户端的数据。
+            （1）客户端需要了解服务器的地址。TCP/IP网络环境中，可用IP地址标识一个主机。
+                 不同程序使用不同端口通信。
+            （2）服务器应用程序必须遭遇客户端应用程序启动，并在指定的IP地址和端口上执行监听操作。
+                 如果该端口被其他应用程序占用，服务器应用程序无法正常启动。
+            （3）客户端在申请发送数据时，服务器端应用程序必须有足够的时间响应才能进行正常的通信。
+            （4）使用Socket协议进行通信的双方还必须使用相同的通信协议，Socket支持的底层通信协议包括TCP和UDP两种。
+                 双方还必须采用相同的字符编码格式。
+            （5）通信过程中，物理网络必须保持畅通，否则通信将会中断。
+            （6）通信结束之前，服务器端和客户端应用程序都可以中断它们之间的连接。
+        
+        Socket开发接口位于应用层和传输层之间。
+    """
+
+    def Example10_2_2(self):
+        """
+        10.2.2 基于TCP的Socket编程
+        """
+        import socket
+        """
+        Python可通过socket模块实现Socket编程。
+        在开始Socket编程之前，需要倒入socket模块。
+        
+        面向连接的Socket通信是基于TCP的。
+        网络中的两个进程以客户机/服务器模式进行通信。
+        
+        服务器程序先于客户机程序启动，每个步骤中调用Socket函数如下：
+            （1）调用socket()函数创建一个流式套接字，返回套接字号s。
+            （2）调用bind()函数将s绑定到一个已知的地址，通常为本地IP地址。
+            （3）调用listen()函数将s设置为监听模式，准备好接收来自各个客户机的连接请求。
+            （4）调用accept()函数等待接收客户端的连接请求。
+            （5）若接收到客户端的请求，则accept()函数返回，得到新的套接字ns。
+            （6）调用recv()函数接收来自客户端的数据，调用send()函数向客户端发送数据。
+            （7）与客户端通信结束后，服务器程序可调用shutdown()函数通知对方不再发送或接收数据，也可以由客户端程序断开连接。
+                 断开连接后，服务器进程调用closesocket()函数关闭套接字ns，返回（4）等待客户端进程连接。
+            （8）如退出服务器程序，调用closesocket()函数关闭最初的套接字s。
+            
+        客户端程序在每一步使用的函数如下：
+            （1）调用WSAStartup()函数加载Windows Socket动态库，然后调用socket()函数创建一个流式套接字，返回套接字号s。
+            （2）调用connect()函数将套接字s连接到服务器。
+            （3）调用send()函数向服务器发送数据，调用recv()函数接收来自服务器的数据。
+            （4）与服务器的通信结束后，客户端程序可以调用close()函数关闭套接字。
+        
+        下面介绍这些函数的使用方法。
+            1.socket()函数
+            socket()函数用于创建与指定的服务提供者绑定套接字，函数原型如下：
+                socket = socket.socket(familly,type)
+            参数说明：
+                familly，指定协议的地址家族，可为AF_INET或AF_UNIX。
+                    AF_INET家族包括Internet地址，AF_UNIX家族用于同一台机器上的进程间通信。
+                type，指定套接字的类型，具体如下：
+                    SOCK_STREAM     提供顺序、可靠、双向和面向连接的字节流数据传输机制，使用TCP
+                    SOCK_DGRAM      支持无连接的数据报，使用UDP
+                    SOCK_RAW        原始套接字，可用于接收本机网卡上的数据帧或者数据包
+            函数执行成功，则返回新Socket的句柄
+            
+            2.bind()函数
+            bind()函数可以将本地地址与一个Socket绑定在一起，函数原型如下：
+                socket.bind(address)
+            参数address是一个双元素元组，格式是(host, port)。host代表主机，port代表端口号。
+            如果端口号正在使用、主机名不正确或端口已被保留，bind()方法将引发socket.error异常。
+            
+            bind()方法应用在未连接的Socket上，在调用connect()方法和listen()方法之前被调用。
+            它既可以应用于基于连接的流Socket，也可以应用于无连接的数据报套接字。
+            调用bind()函数可以为未命名的Socket指定一个名称。
+            
+            当时用Internet地址家族时，名称由地址家族、主机地址和端口号3部分组成。
+            3.listen()函数
+            listen()函数可以将套接字设置为监听接入连接的状态，函数原型如下：
+                listen(backlog)
+            参数backlog指定等待连接队列的最大长度。
+            客户端的连接请求必须排队，如果队列已满，服务器会拒绝请求。
+            
+            4.accept()函数
+            在服务器端调用listen()函数监听接入连接后，可以调用accept()函数来等待接受连接请求。函数原型如下：
+                connection, address = socket.accept()
+            调用accept()方法后，socket会进入waiting状态。
+            客户请求连接时，accept()方法会建立连接并返回服务器。
+            accept()方法返回一个含有两个元素的元组(connection, address)
+            connection是新的socket对象，服务器必须通过它与客户通信；address是客户的Internet地址。
+            
+            5.recv()函数
+            调用recv()函数可以从已连接的Socket中接受数据。函数原型如下：
+                buf = sock.recv(size)
+            参数sock是接收数据的socket对象，参数size指定接收数据的缓冲区大小。
+            recv()函数返回接收的数据。
+            
+            6.send()函数
+            调用send()函数可以在已连接的Socket上发送数据。函数原型如下：
+                sock.recv(buf)
+            参数sock上用于在发送数据的、已连接的socket句柄。
+            参数buf是要发送的数据缓冲区。
+            
+            7.close()函数
+            close()函数用于关闭一个Socket，释放其所占用的所有资源。函数原型如下：
+                s.close()
+            参数s表示要关闭的Socket。
+        """
+
+        '''
+        print '【10-1】一个使用Socket进行通信的简易服务器。'
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # 创建socket对象
+
+        sock.bind(('localhost', 8001))  # 绑定到本地的8001端口
+        sock.listen(5)                  # 在本地的8001端口上监听，等待连接队列的最大长度为5
+        while True:
+            connection, address = sock.accept()
+            try:
+                connection.settimeout(5)
+                buf = connection.recv(1024).decode('utf-8') # 接收客户端的数据
+                if buf == '1':
+                    connection.send(b'welcom to server!')
+                else:
+                    connection.send(b'please go out!')
+            except socket.timeout:
+                print "time out"
+            connection.close()
+        '''
+
+        """
+        服务器在本地('localhost')的8001端口上监听，如果有客户端连接，并且发送数据'1'，则向客户端发送'welcome to server!'，否则发送'please go out!'。
+        """
+
+        print '【10-2】一个使用Socket进行通信的简易客户端。'
+        sockt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        sockt.connect(('localhost',8001))   # 连接到本地的8001端口
+        import time
+        time.sleep(2)
+        sockt.send(b'1')                    # 向服务器发送字符'1'
+        print sockt.recv(1024).decode('utf-8')  # 打印从服务器接收的数据
+        sockt.close()
+
+    def Example10_2_3(self):
+        """
+        10.2.3 基于UDP的Socket编程
+        """
+        import socket
+        """
+        基于UDP的Socket通信具体步骤如下所示：
+        
+        服务器端：
+            （1）建立流式套接字，返回套接字号s；
+            （2）套接字s与本地地址绑定；
+            （3）在套接字s上读写数据，直接结束；
+            （4）关闭套接字。
+        
+        客户机端：
+            （1）建立流式套接字，返回套接字号s；
+            （2）在套接字s上读写数据，直接结束；
+            （3）关闭套接字s。
+        
+        面向非连接的Socket通信流程比较简单，在服务器程序中不需要调用listen()和accept()函数来等待客户端连接；
+        在客户端程序中也不需要与服务器建立连接，而是直接向服务器发送数据。
+        
+            1.sendto()函数
+            使用sendto()函数可以实现发送数据的功能。函数原型如下：
+                s.sendto(data, (addr, port))
+            参数说明如下：
+                s       指定一个Socket句柄
+                data    要传输的数据
+                addr    接收数据的计算机的IP地址
+                port    接收数据的计算机的端口
+        """
+
+        '''
+        print '【10-3】演示使用sendto()函数发送数据报的方法。'
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)    # 创建UDP SOCKET
+        port = 8000             # 服务器端口
+        host = '192.168.0.101'  # 服务器 IP
+        while True:
+            msg = input()       # 接受用户输入
+            if not msg:
+                break           # 发送数据
+            s.sendto(msg.encode(),(host,port))
+        s.close()
+        '''
+
+        """
+        在创建基于UDP的SOCKET对象时，需要使用socket.SOCK_DGRAM参数。
+        程序调用input()函数接受用户输入，调用sendto()函数将用户输入的字符串发送至服务器。
+        """
+
+        """
+            2.recvfrom()函数
+            使用recvfrom()函数可以实现接收数据的功能，函数原型如下：
+                data, addr = s.recvfrom(bufsize)
+            参数说明如下：
+                s       指定一个Socket句柄
+                bufsize 接收数据的缓冲区的长度，单位为字节
+                data    接收数据的缓冲区
+                addr    发送数据的客户端的地址
+        """
+
+        print '【10-4】演示使用recvfrom()函数接收数据报的方法。'
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.bind(('192.168.0.101',80001))
+        while True:
+            data,addr = s.recvfrom(1024)
+            if not data:
+                print 'client has exited!'
+                break
+            print 'received:',data,'from',addr
+        s.close()
+
+        """
+        程序首先创建一个基于UDP的SOCKET对象，然后绑定到192.168.0.101，监听端口为8000。
+        然后循环调用recvfrom()方法接收客户端发送来的数据。
+        """
+
 if __name__ == "__main__":
     # c2 = Chapter2()
     # c3 = Chapter3()
     # c4 = Chapter4()
     # c5 = Chapter5()
     # c6 = Chapter6()
-    c9 = Chapter9()
+    # c9 = Chapter9()
+    c10 = Chapter10()
     # c2.Example2_1_1()
     # c2.Example2_1_2()
     # c2.Example2_1_3()
@@ -4063,4 +4373,6 @@ if __name__ == "__main__":
     # c6.Example6_3()
     # c9.Example9_2_1()
     # c9.Example9_2_2()
-    c9.Example9_3_2()
+    # c9.Example9_3_2()
+    # c10.Example10_2_2()     # 注！服务器代码段已移至文件"10-1.py"，运行时前请先跑动该文件。
+    c10.Example10_2_3()
