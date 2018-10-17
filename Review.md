@@ -3,6 +3,8 @@
 
 概念解释和具体代码详见[NoteBook](src/NoteBook.py)。
 
+**Warning**：本文档用到HTML代码，不受Github支持。如需查看目录、表格等，请下载使用本地编译器查看。
+[toc]
 ## Chapter2 Python语言基础
 ### 1.常量和变量
 #### i.常量
@@ -113,7 +115,7 @@ frozenset({'A','b',...})
 #### ii.定义和使用类
 声明类、定义类的对象、成员变量、构造函数__init__、析构函数__del__。
 
-特殊规则：__xxx__表示系统定义名字，__xxx表示类中私有变量名。
+特殊规则：__ xxx __ 表示系统定义名字，__ xxx表示类中私有变量名。
 
 #### iii.类的静态成员
 静态变量、静态方法。
@@ -395,3 +397,102 @@ Python拓展数据结构：栈、队列、树、链表等。
 ##### viii.定时器（Thread的派生类）
 ###### a.创建定时器：timer = threading.Timer(t,f)
 ###### b.启动定时器：timer.start()
+## Chapter10 Python网络编程
+### 网络通信模型和TCP/IP协议簇
+#### OSI参考模型
+开放系统互连参考模型（Open System Interconnection Reference Model）简称为OSI参考模型。分为7个层次：
+- 物理层 Physical Layer
+- 数据链路层 Data Link Layer
+- 网络层 Network Layer
+- 传输层 Transport Layer
+- 会话层 Session Layer
+- 表示层 Presentation Layer
+- 应用层 Application Layer
+
+低三层：网络通信链路；高四层：端到端数据通信。每层为数据包加一个头部。
+
+不是所有数据都要经过7层，比如同一网段二层通信、路由器间的三层通信等。
+
+信息交换单元称为协议数据单元（PDU）。
+| OSI参考模型中的层次 |   PDU的特定名称   |
+|:-------------------:|:-----------------:|
+|       传输层        | 数据段（Segment） |
+|       网络层        | 数据包（Packet）  |
+|     数据链路层      |  数据帧（Frame）  |
+|       物理层        |    比特（Bit）    |
+#### TCP/IP协议簇体系结构
+TCP/IP协议簇规范了网络设备之间数据往来的格式和传送方式。包含网络接口层、网络层、传输层和应用层。
+
+<div style="text-align:center">
+<table>
+  <tr>
+    <td>OSI参考模型</td>
+    <td colspan="2">TCP/IP协议簇</td>
+  </tr>
+    <tr>
+      <td>应用层</td>
+      <td rowspan="3">应用层</td>
+      <td rowspan="3">FTP,Telnet,SMTP,SNMP,NFS</td>    
+    </tr>
+  <tr>
+    <td>表示层</td>
+  </tr>
+  <tr>
+    <td>会话层</td>
+  </tr>
+  <tr>
+    <td>传输层</td>
+    <td>传输层</td>
+    <td>CTP,UDP</td>    
+  </tr>
+  <tr>
+    <td>网络层</td>
+    <td>网络层</td>
+    <td>IP,ICMP,ARP,RARP</td>    
+  </tr>
+  <tr>
+    <td>数据链路层</td>
+    <td>网络接口层</td>
+    <td>Ethernet 802.3, Token Ring 802.5, X.25, Frame reley, HDLC, PPP</td>    
+  </tr>
+  <tr>
+    <td>物理层</td>
+    <td colspan="2">未定义</td>    
+  </tr>
+</table>
+</div>
+
+### Socket编程
+#### 工作原理
+- 客户端需要了解服务器的地址和应用程序端口
+- 服务器应用程序必须早于客户端应用程序启动
+- 客户端申请发送数据，服务器必须有足够时间响应
+- 双方必须使用相同的通信协议
+- 通信过程中，物理网络必须保持畅通
+- 通信结束之前双方都可以中断连接
+<div style="text-align:center">
+<table align:"center">
+  <caption>Socket编程的层次结构<caption>
+  <tr><td colspan="2">应用层</td></tr>
+  <tr><td colspan="2">Socket开发接口</td></tr>
+  <tr><td colspan="2">传输层</td></tr>
+  <tr>
+    <td>TCP</td>
+    <td>UDP</td>
+  </tr>
+  <tr><td colspan="2">网络层 IP</td></tr>
+  <tr><td colspan="2">驱动</td></tr>
+  <tr><td colspan="2">物理层</td></tr>
+</table>
+</div>
+#### 基于TCP的Socket编程
+##### a.创建套接字：s = socket.socket(familly, type)
+##### b.绑定地址：s.bind(address)
+##### c.监听状态：s.listen(backlog)
+##### d.等待请求：connection, address = s.accept()
+##### e.接收数据：buf = s.recv(size)
+##### f.发送数据：s.send(buf)
+##### g.关闭套接字：close()
+#### 基于UDP的Socket编程
+##### a.发送数据：s.sendto(data, (addr, port))
+##### b.接收数据：data, addr = s.recvfrom(bufsize)
