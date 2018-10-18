@@ -496,3 +496,8 @@ TCP/IP协议簇规范了网络设备之间数据往来的格式和传送方式�
 #### 基于UDP的Socket编程
 ##### a.发送数据：s.sendto(data, (addr, port))
 ##### b.接收数据：data, addr = s.recvfrom(bufsize)
+## 硬件学习
+Python对硬件模块的支持至关重要，下面是对学习的笔记。
+
+### [蓝牙模块](PyBlueZ.md)
+蓝牙接口对应于socket，通过socket即可实现蓝牙传输。
