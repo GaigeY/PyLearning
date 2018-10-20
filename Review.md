@@ -4,6 +4,7 @@
 概念解释和具体代码详见[NoteBook](src/NoteBook.py)。
 
 **Warning**：本文档用到HTML代码，不受Github支持。如需查看目录、表格等，请下载使用本地编译器查看。
+
 [toc]
 ## Chapter2 Python语言基础
 ### 1.常量和变量
@@ -485,6 +486,7 @@ TCP/IP协议簇规范了网络设备之间数据往来的格式和传送方式�
   <tr><td colspan="2">物理层</td></tr>
 </table>
 </div>
+
 #### 基于TCP的Socket编程
 ##### a.创建套接字：s = socket.socket(familly, type)
 ##### b.绑定地址：s.bind(address)
