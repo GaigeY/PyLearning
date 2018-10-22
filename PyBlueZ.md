@@ -6,7 +6,8 @@ Python对蓝牙的支持是通过PyBlueZ模块实现的。
 > 返回Review文件[请点这里](Review.md)。
 
 PyBlueZ模块主要是TCP协议传输。UDP可百度搜索：Python bluetooth UDP
-
+[toc]
+## 函数列表
 ##### 查找设备：bluetooth.discover_devices(duration, lookup_name, flush_cache, lookup_class)
 返回的是以(addr, name)为一组的序列。
 ##### 访问设备：find_service(address)
@@ -21,3 +22,6 @@ RFCOMM连接的函数和socket的大体对应。
 ###### 传输数据：s.send(data)
 ###### 开放连接：advertise_service(s)
 ##### 获取本地地址：bluetooth.read_local_bdaddr()
+## 实战经验
+实战Blog地址：“src\PyBlueZ\Python and Bluetooth.html”
+请下载并在本地查看。
