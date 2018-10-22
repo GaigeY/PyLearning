@@ -1,4 +1,4 @@
-# simple demonstration of a server application that uses RFCOMM sockets
+# simple of a server application that uses RFCOMM sockets
 
 from bluetooth import *
 
