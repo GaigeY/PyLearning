@@ -1,0 +1,11 @@
+A:hover {background-color:yellow;}
+h3               {font-family:"Verdana"; font-size:13pt}
+body				{font-family:"Verdana"; font-size:medium;}
+table.yellow     { background-color: #D1D8FC }
+table.aqua       { background-color: aqua }
+tr           		{ vertical-align: top; font-family:"Verdana"; font-size:medium}
+td           		{vertical-align: top; font-family:"Verdana"; font-size:medium}
+tt           		{ vertical-align: top; font-family:"Verdana"; font-size:medium}
+pre           	{ vertical-align: top; font-family:"Verdana"; font-size:medium}
+blockquote       	{ vertical-align: top; font-family:"Verdana"; font-size:medium}
+.navigation		{background-color:Olive}
